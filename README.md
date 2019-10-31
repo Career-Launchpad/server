@@ -7,5 +7,5 @@
 - POST : https://d23kwuyo38.execute-api.us-east-1.amazonaws.com/production
 # add student to database (launchpad.student table)
 - POST : https://d23kwuyo38.execute-api.us-east-1.amazonaws.com/production/student
-# filter data by variables: Company, Major
+# filter data by variables: Company, Major, WorkType("Full-Time","Part-Time","Internship")
 - POST : https://d23kwuyo38.execute-api.us-east-1.amazonaws.com/production/filter
