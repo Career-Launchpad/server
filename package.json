@@ -1,0 +1,17 @@
+{
+  "name": "rdsapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-cli": "0.0.2",
+    "aws-sdk": "^2.481.0",
+    "mysql": "^2.17.1",
+    "serverless": "^1.45.1"
+  }
+}
