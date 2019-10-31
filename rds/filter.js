@@ -36,6 +36,13 @@ FROM launchpad.offer o
       sql = sql + `\n AND \n (o.major_id = (SELECT id FROM launchpad.major WHERE name = '${event.Major}'))`;
     }
   }
+  if(event.WorkType != null){
+    if(companyVisit == true || majorVisit == true){ // Need to add an AND clause
+      sql = sql + `\n AND \n (o.work_type_id = (SELECT id FROM launchpad.work_type WHERE name = '${event.WorkType}'))`;
+    }else{
+      sql = sql + `\n WHERE (o.work_type_id = (SELECT id FROM launchpad.work_type WHERE name = '${event.WorkType}'))`;
+    }
+  }
   sql = sql + `)`;
   con.query(sql, function (err, result) {
     if (err) throw err;
