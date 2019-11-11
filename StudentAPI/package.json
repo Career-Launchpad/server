@@ -1,0 +1,12 @@
+{
+  "name": "students-rest-api-with-dynamodb",
+  "version": "1.0.0",
+  "description": "Serverless CRUD service exposing a REST HTTP interface",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.568.0",
+    "node": "^13.1.0",
+    "uuid": "^2.0.3"
+  }
+}
