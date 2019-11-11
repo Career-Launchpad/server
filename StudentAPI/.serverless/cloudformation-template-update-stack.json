@@ -129,7 +129,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1573492295696-2019-11-11T17:11:35.696Z/students-rest-api-with-dynamodb.zip"
+          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1573493540270-2019-11-11T17:32:20.270Z/students-rest-api-with-dynamodb.zip"
         },
         "FunctionName": "students-rest-api-with-dynamodb-dev-create",
         "Handler": "todos/create.create",
@@ -153,14 +153,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "CreateLambdaVersioneWMOJyuYKwAk3fyvVwH3VuFt8HtYgFj4A2JclAGM4s8": {
+    "CreateLambdaVersionFEMlpDqrv527NVdpvUnY3aZotzaBveyBSWdyRUPLwF4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateLambdaFunction"
         },
-        "CodeSha256": "GuVw3Gm+t8tS5PcS3WdwQFJBwJshcJCYVVg1cQcGKTE="
+        "CodeSha256": "sn4jI8oxUtuWm8rDBQ1+4mqC/PGGoNeSgCxVeklJL0E="
       }
     },
     "GetLambdaFunction": {
@@ -170,7 +170,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1573492295696-2019-11-11T17:11:35.696Z/students-rest-api-with-dynamodb.zip"
+          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1573493540270-2019-11-11T17:32:20.270Z/students-rest-api-with-dynamodb.zip"
         },
         "FunctionName": "students-rest-api-with-dynamodb-dev-get",
         "Handler": "todos/get.get",
@@ -194,14 +194,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetLambdaVersionWAwxg5V2J3EHcjXsYYn2n5t4RVHNNSxGGelGDsa5Gc": {
+    "GetLambdaVersionh83lfleO4sJSRKzX0pzBUxE3jjSVwBsFAWXidVIqmU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetLambdaFunction"
         },
-        "CodeSha256": "GuVw3Gm+t8tS5PcS3WdwQFJBwJshcJCYVVg1cQcGKTE="
+        "CodeSha256": "sn4jI8oxUtuWm8rDBQ1+4mqC/PGGoNeSgCxVeklJL0E="
       }
     },
     "DeleteLambdaFunction": {
@@ -211,7 +211,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1573492295696-2019-11-11T17:11:35.696Z/students-rest-api-with-dynamodb.zip"
+          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1573493540270-2019-11-11T17:32:20.270Z/students-rest-api-with-dynamodb.zip"
         },
         "FunctionName": "students-rest-api-with-dynamodb-dev-delete",
         "Handler": "todos/delete.delete",
@@ -235,14 +235,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "DeleteLambdaVersion45jGswYg2PICBzrQ9hCKPbvB0eSAPc1CosU34PRzwE": {
+    "DeleteLambdaVersionvrjbCWPiE0XDGWzhntwlYnQYaBv5cKxfTN4hatIVXU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteLambdaFunction"
         },
-        "CodeSha256": "GuVw3Gm+t8tS5PcS3WdwQFJBwJshcJCYVVg1cQcGKTE="
+        "CodeSha256": "sn4jI8oxUtuWm8rDBQ1+4mqC/PGGoNeSgCxVeklJL0E="
       }
     },
     "ApiGatewayRestApi": {
@@ -506,7 +506,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1573492289289": {
+    "ApiGatewayDeployment1573493534617": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -643,19 +643,19 @@
     "CreateLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateLambdaVersioneWMOJyuYKwAk3fyvVwH3VuFt8HtYgFj4A2JclAGM4s8"
+        "Ref": "CreateLambdaVersionFEMlpDqrv527NVdpvUnY3aZotzaBveyBSWdyRUPLwF4"
       }
     },
     "GetLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetLambdaVersionWAwxg5V2J3EHcjXsYYn2n5t4RVHNNSxGGelGDsa5Gc"
+        "Ref": "GetLambdaVersionh83lfleO4sJSRKzX0pzBUxE3jjSVwBsFAWXidVIqmU"
       }
     },
     "DeleteLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteLambdaVersion45jGswYg2PICBzrQ9hCKPbvB0eSAPc1CosU34PRzwE"
+        "Ref": "DeleteLambdaVersionvrjbCWPiE0XDGWzhntwlYnQYaBv5cKxfTN4hatIVXU"
       }
     },
     "ServiceEndpoint": {
