@@ -5,7 +5,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "apollo-server-lambda": "^2.9.7",
     "aws-sdk": "^2.568.0",
+    "graphql": "^14.5.8",
     "node": "^13.1.0",
     "uuid": "^2.0.3"
   }
