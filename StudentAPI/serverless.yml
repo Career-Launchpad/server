@@ -20,25 +20,9 @@ provider:
 
 functions:
   create:
-    handler: todos/create.create
+    handler: todos/graphQL.graphQL
     events:
       - http:
           path: todos
           method: post
-          cors: true
-
-  get:
-    handler: todos/get.get
-    events:
-      - http:
-          path: todos/{id}
-          method: get
-          cors: true
-
-  delete:
-    handler: todos/delete.delete
-    events:
-      - http:
-          path: todos/{id}
-          method: delete
           cors: true
