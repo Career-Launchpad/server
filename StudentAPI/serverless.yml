@@ -19,7 +19,7 @@ provider:
       Resource: "arn:aws:dynamodb:us-east-1:095585818143:table/Students"
 
 functions:
-  create:
+  graphQL:
     handler: todos/graphQL.graphQL
     events:
       - http:

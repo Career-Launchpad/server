@@ -16,22 +16,10 @@
         }
       }
     },
-    "CreateLogGroup": {
+    "GraphQLLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/students-rest-api-with-dynamodb-dev-create"
-      }
-    },
-    "GetLogGroup": {
-      "Type": "AWS::Logs::LogGroup",
-      "Properties": {
-        "LogGroupName": "/aws/lambda/students-rest-api-with-dynamodb-dev-get"
-      }
-    },
-    "DeleteLogGroup": {
-      "Type": "AWS::Logs::LogGroup",
-      "Properties": {
-        "LogGroupName": "/aws/lambda/students-rest-api-with-dynamodb-dev-delete"
+        "LogGroupName": "/aws/lambda/students-rest-api-with-dynamodb-dev-graphQL"
       }
     },
     "IamRoleLambdaExecution": {
@@ -122,17 +110,17 @@
         }
       }
     },
-    "CreateLambdaFunction": {
+    "GraphQLLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1573493540270-2019-11-11T17:32:20.270Z/students-rest-api-with-dynamodb.zip"
+          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1573582042147-2019-11-12T18:07:22.147Z/students-rest-api-with-dynamodb.zip"
         },
-        "FunctionName": "students-rest-api-with-dynamodb-dev-create",
-        "Handler": "todos/create.create",
+        "FunctionName": "students-rest-api-with-dynamodb-dev-graphQL",
+        "Handler": "todos/graphQL.graphQL",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -149,100 +137,18 @@
         }
       },
       "DependsOn": [
-        "CreateLogGroup",
+        "GraphQLLogGroup",
         "IamRoleLambdaExecution"
       ]
     },
-    "CreateLambdaVersionFEMlpDqrv527NVdpvUnY3aZotzaBveyBSWdyRUPLwF4": {
+    "GraphQLLambdaVersionD1lOD4EJm97UkidSOuhEPy7qKd4ssrUYhH5KN5nQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "CreateLambdaFunction"
+          "Ref": "GraphQLLambdaFunction"
         },
-        "CodeSha256": "sn4jI8oxUtuWm8rDBQ1+4mqC/PGGoNeSgCxVeklJL0E="
-      }
-    },
-    "GetLambdaFunction": {
-      "Type": "AWS::Lambda::Function",
-      "Properties": {
-        "Code": {
-          "S3Bucket": {
-            "Ref": "ServerlessDeploymentBucket"
-          },
-          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1573493540270-2019-11-11T17:32:20.270Z/students-rest-api-with-dynamodb.zip"
-        },
-        "FunctionName": "students-rest-api-with-dynamodb-dev-get",
-        "Handler": "todos/get.get",
-        "MemorySize": 1024,
-        "Role": {
-          "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
-            "Arn"
-          ]
-        },
-        "Runtime": "nodejs10.x",
-        "Timeout": 6,
-        "Environment": {
-          "Variables": {
-            "DYNAMODB_TABLE": "Students"
-          }
-        }
-      },
-      "DependsOn": [
-        "GetLogGroup",
-        "IamRoleLambdaExecution"
-      ]
-    },
-    "GetLambdaVersionh83lfleO4sJSRKzX0pzBUxE3jjSVwBsFAWXidVIqmU": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "GetLambdaFunction"
-        },
-        "CodeSha256": "sn4jI8oxUtuWm8rDBQ1+4mqC/PGGoNeSgCxVeklJL0E="
-      }
-    },
-    "DeleteLambdaFunction": {
-      "Type": "AWS::Lambda::Function",
-      "Properties": {
-        "Code": {
-          "S3Bucket": {
-            "Ref": "ServerlessDeploymentBucket"
-          },
-          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1573493540270-2019-11-11T17:32:20.270Z/students-rest-api-with-dynamodb.zip"
-        },
-        "FunctionName": "students-rest-api-with-dynamodb-dev-delete",
-        "Handler": "todos/delete.delete",
-        "MemorySize": 1024,
-        "Role": {
-          "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
-            "Arn"
-          ]
-        },
-        "Runtime": "nodejs10.x",
-        "Timeout": 6,
-        "Environment": {
-          "Variables": {
-            "DYNAMODB_TABLE": "Students"
-          }
-        }
-      },
-      "DependsOn": [
-        "DeleteLogGroup",
-        "IamRoleLambdaExecution"
-      ]
-    },
-    "DeleteLambdaVersionvrjbCWPiE0XDGWzhntwlYnQYaBv5cKxfTN4hatIVXU": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "DeleteLambdaFunction"
-        },
-        "CodeSha256": "sn4jI8oxUtuWm8rDBQ1+4mqC/PGGoNeSgCxVeklJL0E="
+        "CodeSha256": "VfJuRGDlqoXe9w7sb0MO8yAY9uzD+NCq4Vc8HYlIMgU="
       }
     },
     "ApiGatewayRestApi": {
@@ -266,18 +172,6 @@
           ]
         },
         "PathPart": "todos",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      }
-    },
-    "ApiGatewayResourceTodosIdVar": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Ref": "ApiGatewayResourceTodos"
-        },
-        "PathPart": "{id}",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -330,53 +224,6 @@
         }
       }
     },
-    "ApiGatewayMethodTodosIdVarOptions": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "AuthorizationType": "NONE",
-        "HttpMethod": "OPTIONS",
-        "MethodResponses": [
-          {
-            "StatusCode": "200",
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Access-Control-Allow-Headers": true,
-              "method.response.header.Access-Control-Allow-Methods": true,
-              "method.response.header.Access-Control-Allow-Credentials": true
-            },
-            "ResponseModels": {}
-          }
-        ],
-        "RequestParameters": {},
-        "Integration": {
-          "Type": "MOCK",
-          "RequestTemplates": {
-            "application/json": "{statusCode:200}"
-          },
-          "ContentHandling": "CONVERT_TO_TEXT",
-          "IntegrationResponses": [
-            {
-              "StatusCode": "200",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET'",
-                "method.response.header.Access-Control-Allow-Credentials": "'false'"
-              },
-              "ResponseTemplates": {
-                "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
-              }
-            }
-          ]
-        },
-        "ResourceId": {
-          "Ref": "ApiGatewayResourceTodosIdVar"
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      }
-    },
     "ApiGatewayMethodTodosPost": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
@@ -408,7 +255,7 @@
                 ":lambda:path/2015-03-31/functions/",
                 {
                   "Fn::GetAtt": [
-                    "CreateLambdaFunction",
+                    "GraphQLLambdaFunction",
                     "Arn"
                   ]
                 },
@@ -420,93 +267,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayMethodTodosIdVarGet": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "HttpMethod": "GET",
-        "RequestParameters": {},
-        "ResourceId": {
-          "Ref": "ApiGatewayResourceTodosIdVar"
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        },
-        "ApiKeyRequired": false,
-        "AuthorizationType": "NONE",
-        "Integration": {
-          "IntegrationHttpMethod": "POST",
-          "Type": "AWS_PROXY",
-          "Uri": {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition"
-                },
-                ":apigateway:",
-                {
-                  "Ref": "AWS::Region"
-                },
-                ":lambda:path/2015-03-31/functions/",
-                {
-                  "Fn::GetAtt": [
-                    "GetLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "/invocations"
-              ]
-            ]
-          }
-        },
-        "MethodResponses": []
-      }
-    },
-    "ApiGatewayMethodTodosIdVarDelete": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "HttpMethod": "DELETE",
-        "RequestParameters": {},
-        "ResourceId": {
-          "Ref": "ApiGatewayResourceTodosIdVar"
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        },
-        "ApiKeyRequired": false,
-        "AuthorizationType": "NONE",
-        "Integration": {
-          "IntegrationHttpMethod": "POST",
-          "Type": "AWS_PROXY",
-          "Uri": {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition"
-                },
-                ":apigateway:",
-                {
-                  "Ref": "AWS::Region"
-                },
-                ":lambda:path/2015-03-31/functions/",
-                {
-                  "Fn::GetAtt": [
-                    "DeleteLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "/invocations"
-              ]
-            ]
-          }
-        },
-        "MethodResponses": []
-      }
-    },
-    "ApiGatewayDeployment1573493534617": {
+    "ApiGatewayDeployment1573582032730": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -516,92 +277,15 @@
       },
       "DependsOn": [
         "ApiGatewayMethodTodosOptions",
-        "ApiGatewayMethodTodosIdVarOptions",
-        "ApiGatewayMethodTodosPost",
-        "ApiGatewayMethodTodosIdVarGet",
-        "ApiGatewayMethodTodosIdVarDelete"
+        "ApiGatewayMethodTodosPost"
       ]
     },
-    "CreateLambdaPermissionApiGateway": {
+    "GraphQLLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "CreateLambdaFunction",
-            "Arn"
-          ]
-        },
-        "Action": "lambda:InvokeFunction",
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": {
-          "Fn::Join": [
-            "",
-            [
-              "arn:",
-              {
-                "Ref": "AWS::Partition"
-              },
-              ":execute-api:",
-              {
-                "Ref": "AWS::Region"
-              },
-              ":",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":",
-              {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "/*/*"
-            ]
-          ]
-        }
-      }
-    },
-    "GetLambdaPermissionApiGateway": {
-      "Type": "AWS::Lambda::Permission",
-      "Properties": {
-        "FunctionName": {
-          "Fn::GetAtt": [
-            "GetLambdaFunction",
-            "Arn"
-          ]
-        },
-        "Action": "lambda:InvokeFunction",
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": {
-          "Fn::Join": [
-            "",
-            [
-              "arn:",
-              {
-                "Ref": "AWS::Partition"
-              },
-              ":execute-api:",
-              {
-                "Ref": "AWS::Region"
-              },
-              ":",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":",
-              {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "/*/*"
-            ]
-          ]
-        }
-      }
-    },
-    "DeleteLambdaPermissionApiGateway": {
-      "Type": "AWS::Lambda::Permission",
-      "Properties": {
-        "FunctionName": {
-          "Fn::GetAtt": [
-            "DeleteLambdaFunction",
+            "GraphQLLambdaFunction",
             "Arn"
           ]
         },
@@ -640,22 +324,10 @@
         "Ref": "ServerlessDeploymentBucket"
       }
     },
-    "CreateLambdaFunctionQualifiedArn": {
+    "GraphQLLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateLambdaVersionFEMlpDqrv527NVdpvUnY3aZotzaBveyBSWdyRUPLwF4"
-      }
-    },
-    "GetLambdaFunctionQualifiedArn": {
-      "Description": "Current Lambda function version",
-      "Value": {
-        "Ref": "GetLambdaVersionh83lfleO4sJSRKzX0pzBUxE3jjSVwBsFAWXidVIqmU"
-      }
-    },
-    "DeleteLambdaFunctionQualifiedArn": {
-      "Description": "Current Lambda function version",
-      "Value": {
-        "Ref": "DeleteLambdaVersionvrjbCWPiE0XDGWzhntwlYnQYaBv5cKxfTN4hatIVXU"
+        "Ref": "GraphQLLambdaVersionD1lOD4EJm97UkidSOuhEPy7qKd4ssrUYhH5KN5nQ"
       }
     },
     "ServiceEndpoint": {
