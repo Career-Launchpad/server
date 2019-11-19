@@ -17,9 +17,9 @@ module.exports = {
         console.log('in student resolver ', id)
         const params = {
             TableName: 'Students',
-            Key: { 
+            Key: {
                 student_id: {
-                    N: id 
+                    N: id
                 }
             }
         };
