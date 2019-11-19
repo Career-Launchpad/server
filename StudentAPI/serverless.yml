@@ -6,7 +6,8 @@ provider:
   name: aws
   runtime: nodejs10.x
   environment:
-    DYNAMODB_TABLE: Students
+    DYNAMODB_TABLE1: Student
+    DYNAMODB_TABLE2: College
   iamRoleStatements:
     - Effect: Allow
       Action:
