@@ -8,8 +8,7 @@ const {
   GraphQLInt,
   GraphQLList,
   GraphQLBoolean,
-  GraphQLFloat,
-  GraphQLInputObjectType
+  GraphQLFloat
 } = graphql;
 
 const BonusType = new GraphQLObjectType({
@@ -133,12 +132,12 @@ fields: {
     },
     visualizations: {
         type: VisualizationType,
-        args: { filters: { type: GraphQLString } },
-        resolve(parent, args) {
-            console.log(parent);
-            console.log(args);
-            // resolver.visualizationResolver(args.filters);
-        }
+        // args: { filters: { type: GraphQLString } },
+        // resolve(parent, args) {
+        //     console.log(parent);
+        //     console.log(args);
+        //     // resolver.visualizationResolver(args.filters);
+        // }
     },
     admin: {
         type: GraphQLString,
