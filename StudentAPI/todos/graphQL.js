@@ -2,12 +2,13 @@
 
 const AWS = require('aws-sdk');
 
-import RootQuery from './schema'
+//mport RootQuery from './schema';
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.graphQL = (event, context, callback) => {
-  const response = {
+    console.log("Entered");
+    const response = {
       statusCode: 200,
       body: "Worked",
       headers: {

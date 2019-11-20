@@ -17,9 +17,10 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:us-east-1:095585818143:table/Students"
+      Resource: "arn:aws:dynamodb:us-east-1:095585818143:table/Student"
 
 functions:
+  
   graphQL:
     handler: todos/graphQL.graphQL
     events:

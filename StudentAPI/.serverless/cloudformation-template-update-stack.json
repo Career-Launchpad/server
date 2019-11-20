@@ -88,7 +88,7 @@
                     "dynamodb:UpdateItem",
                     "dynamodb:DeleteItem"
                   ],
-                  "Resource": "arn:aws:dynamodb:us-east-1:095585818143:table/Students"
+                  "Resource": "arn:aws:dynamodb:us-east-1:095585818143:table/Student"
                 }
               ]
             }
@@ -117,7 +117,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1574264586847-2019-11-20T15:43:06.847Z/students-rest-api-with-dynamodb.zip"
+          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1574264842972-2019-11-20T15:47:22.972Z/students-rest-api-with-dynamodb.zip"
         },
         "FunctionName": "students-rest-api-with-dynamodb-dev-graphQL",
         "Handler": "todos/graphQL.graphQL",
@@ -142,14 +142,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GraphQLLambdaVersionmQuGjSxIAvJG3LT03idiDZoxDNJ0LURMtGvFGbTGVw4": {
+    "GraphQLLambdaVersiongAK9OhvAtAdKWEoJJ3wmEivvpnFIa27mqZ1LuC9g": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GraphQLLambdaFunction"
         },
-        "CodeSha256": "XV93fV8ovM7IwfhQ9ikpijP7I/0KPxDoy5u9N/1HZpo="
+        "CodeSha256": "AD/pUWk+aMQG5Wy+lbwP/9nItQnxZlR0S+QMnTw4RZQ="
       }
     },
     "ApiGatewayRestApi": {
@@ -268,7 +268,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1574264578534": {
+    "ApiGatewayDeployment1574264834742": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -328,7 +328,7 @@
     "GraphQLLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GraphQLLambdaVersionmQuGjSxIAvJG3LT03idiDZoxDNJ0LURMtGvFGbTGVw4"
+        "Ref": "GraphQLLambdaVersiongAK9OhvAtAdKWEoJJ3wmEivvpnFIa27mqZ1LuC9g"
       }
     },
     "ServiceEndpoint": {
