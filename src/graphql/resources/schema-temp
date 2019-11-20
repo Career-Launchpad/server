@@ -1,0 +1,106 @@
+const Bonus = new GraphQLObjectType({
+  name: 'bonus',
+  fields: () => ({
+    id: { type: GraphQLID },
+    value: { type: GraphQLFloat },
+    type: { type: GraphQLString },
+    repeatInterval: { type: GraphQLString },
+    repeatCount: { type: GraphQLInt },
+    immediate: { type: GraphQLBoolean }
+  })
+});
+
+const Compensation = new GraphQLObjectType({
+  name: 'compensation',
+  fields: () => ({
+    id: { type: GraphQLID },
+    value: { type: GraphQLInt },
+    type: { type: GraphQLString },
+    bonuses: {
+      type: GraphQLList(Bonus),
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        console.log(parent);
+        console.log(args);
+        //   get offers with parentID == student_id
+      }
+    }
+  })
+});
+
+const Offer = new GraphQLObjectType({
+  name: "offer",
+  fields: () => ({
+    id: { type: GraphQLID },
+    type: { type: GraphQLString },
+    accepted: { type: GraphQLBoolean },
+    company_id: { type: GraphQLID },
+    location: { type: GraphQLString },
+    compensations: {
+      type: GraphQLList(Compensation),
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        console.log(parent);
+        console.log(args);
+        //   get offers with parentID == student_id
+      }
+    }
+  })
+});
+
+const Student = new GraphQLObjectType({
+  name: "student",
+  fields: () => ({
+    student_id: { type: GraphQLID },
+    college_id: { type: GraphQLID },
+    major: { type: GraphQLString },
+    gender: { type: GraphQLString },
+    ethnicity: { type: GraphQLString },
+    offers: {
+      type: GraphQLList(Offer),
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        console.log(parent);
+        console.log(args);
+        //   get offers with parentID == student_id
+      }
+    },
+  })
+});
+
+const Visualization = new GraphQLObjectType({
+  name: 'visualization',
+  fields: () => ({
+    id: { type: GraphQLID },
+    histogram: {
+      type: GraphQLString,
+      args: { filters: { type: GraphQLString } },
+      resolve(parent, args) {
+        // get histogram
+        console.log(parent);
+        console.log(args);
+        resolver.histogramResolver(parent.args.filters);
+      }
+    },
+    map: {
+      type: GraphQLString,
+      args: { filters: { type: GraphQLString } },
+      resolve(parent, args) {
+        // get histogram
+        console.log(parent);
+        console.log(args);
+        resolver.mapResolver(parent.args.filters);
+      }
+    },
+    barChart: {
+      type: GraphQLString,
+      args: { filters: { type: GraphQLString } },
+      resolve(parent, args) {
+        // get histogram
+        console.log(parent);
+        console.log(args);
+        resolver.barChartResolver(parent.args.filters);
+      }
+    },
+  })
+})
