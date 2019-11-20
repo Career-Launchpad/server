@@ -1,0 +1,45 @@
+{
+  "name": "students-rest-api-with-dynamodb",
+  "version": "1.0.0",
+  "description": "Serverless CRUD service exposing a REST HTTP interface",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "graphql": "nodemon src/graphql/index.js --exec babel-node",
+    "graphql-lambda": "webpack --mode=production && ./node_modules/.bin/sls invoke local -f graphql --data {}",
+    "graphql-deploy": "webpack --mode=production && sls deploy"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "dependencies": {
+    "aws-sdk": "^2.568.0",
+    "aws-serverless-express": "^3.3.6",
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.5.8",
+    "graphql-relay": "^0.6.0",
+    "node": "^13.1.0",
+    "uuid": "^2.0.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/node": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "babel-loader": "^8.0.6",
+    "babel-minify-webpack-plugin": "^0.3.1",
+    "babel-preset-minify": "^0.5.1",
+    "husky": "^3.1.0",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
+    "serverless": "^1.58.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}

@@ -1,0 +1,38 @@
+service: students-rest-api-with-dynamodb
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  environment:
+    DYNAMODB_TABLE1: Student
+    DYNAMODB_TABLE2: College
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:095585818143:table/Student"
+
+package:
+  exclude:
+    - .vscode/**
+    - lambdas/**
+    - node_modules/**
+    - src/**
+  include:
+    - dist/**
+
+functions:
+  graphql:
+    handler: dist/graphql.handler
+    events:
+      - http:
+          path: graphql
+          method: get
+          cors: true
