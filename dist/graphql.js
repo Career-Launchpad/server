@@ -5421,8 +5421,7 @@ module.exports = (function(e) {
         return (
           "/" === e[0] ||
           (":" === e[1] && ("\\" === e[2] || "/" === e[2])) ||
-          "\\\\" === e.substring(0, 2) ||
-          void 0
+            "\\\\" === e.substring(0, 2) || void 0
         );
       }),
       (t.flatten = a.function(
@@ -5674,10 +5673,10 @@ module.exports = (function(e) {
         2 === r.length &&
         2 === n.length &&
         ("*" === n[0] || n[0] === r[0]) &&
-        ("*+" === n[1].substr(0, 2)
-          ? n[1].length <= r[1].length + 1 &&
-            n[1].substr(1) === r[1].substr(1 - n[1].length)
-          : "*" === n[1] || n[1] === r[1])
+          ("*+" === n[1].substr(0, 2)
+            ? n[1].length <= r[1].length + 1 &&
+              n[1].substr(1) === r[1].substr(1 - n[1].length)
+            : "*" === n[1] || n[1] === r[1])
       );
     }
     (e.exports = function(e, t) {
@@ -15103,9 +15102,7 @@ module.exports = (function(e) {
       return (
         "function" == typeof n &&
         "function" == typeof Symbol &&
-        "symbol" == typeof n("foo") &&
-        "symbol" == typeof Symbol("bar") &&
-        i()
+          "symbol" == typeof n("foo") && "symbol" == typeof Symbol("bar") && i()
       );
     };
   },
@@ -18483,8 +18480,7 @@ module.exports = (function(e) {
                   .apply(this, arguments)
                   .isEqualNode(e) &&
                 e.name === this.name &&
-                e.publicId === this.publicId &&
-                e.systemId === this.systemId
+                  e.publicId === this.publicId && e.systemId === this.systemId
               );
             }),
             r
@@ -21304,9 +21300,7 @@ module.exports = (function(e) {
           t = new Date(e + 1e3 * this.expiryWindow);
         return (
           !!(this.expireTime && t > this.expireTime) ||
-          this.expired ||
-          !this.accessKeyId ||
-          !this.secretAccessKey
+          this.expired || !this.accessKeyId || !this.secretAccessKey
         );
       },
       get: function(e) {
@@ -22025,8 +22019,7 @@ module.exports = (function(e) {
               return (
                 e.namespaceURI === this.namespaceURI &&
                 e.prefix === this.prefix &&
-                e.localName === this.localName &&
-                e.value === this.value
+                  e.localName === this.localName && e.value === this.value
               );
             }),
             e
@@ -29286,10 +29279,10 @@ module.exports = (function(e) {
         return (
           ("GET" === e || "HEAD" === e) &&
           ((r >= 200 && r < 300) || 304 === r) &&
-          c(this.headers, {
-            etag: t.get("ETag"),
-            "last-modified": t.get("Last-Modified")
-          })
+            c(this.headers, {
+              etag: t.get("ETag"),
+              "last-modified": t.get("Last-Modified")
+            })
         );
       }),
       f(d, "stale", function() {
@@ -31457,9 +31450,8 @@ module.exports = (function(e) {
         return (
           !!this.timeoutError(e) ||
           !!this.networkingError(e) ||
-          !!this.expiredCredentialsError(e) ||
-          !!this.throttledError(e) ||
-          e.statusCode >= 500
+            !!this.expiredCredentialsError(e) ||
+              !!this.throttledError(e) || e.statusCode >= 500
         );
       },
       networkingError: function(e) {
@@ -39352,8 +39344,8 @@ module.exports = (function(e) {
             return (
               (!y(o) || !y(s) || o !== s) &&
               (0 !== o || 0 !== s) &&
-              o !== 1 / 0 &&
-              (s === 1 / 0 || (s !== -1 / 0 && (o === -1 / 0 || o < s)))
+                o !== 1 / 0 &&
+                  (s === 1 / 0 || (s !== -1 / 0 && (o === -1 / 0 || o < s)))
             );
           }
           return !b(i, n) && (!!b(n, i) || n < i);
