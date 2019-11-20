@@ -15,7 +15,7 @@ module.exports.graphQL = (event, context, callback) => {
       "Access-Control-Allow-Credentials" : true  }
     };
     callback(null, response);
-}
+};
 
 
 /*=> graphql(RootQuery, event.queryStringParameters.query)
