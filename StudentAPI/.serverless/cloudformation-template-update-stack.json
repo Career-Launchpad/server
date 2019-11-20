@@ -117,7 +117,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1573582042147-2019-11-12T18:07:22.147Z/students-rest-api-with-dynamodb.zip"
+          "S3Key": "serverless/students-rest-api-with-dynamodb/dev/1574188031132-2019-11-19T18:27:11.132Z/students-rest-api-with-dynamodb.zip"
         },
         "FunctionName": "students-rest-api-with-dynamodb-dev-graphQL",
         "Handler": "todos/graphQL.graphQL",
@@ -132,7 +132,8 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "DYNAMODB_TABLE": "Students"
+            "DYNAMODB_TABLE1": "Student",
+            "DYNAMODB_TABLE2": "College"
           }
         }
       },
@@ -141,14 +142,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GraphQLLambdaVersionD1lOD4EJm97UkidSOuhEPy7qKd4ssrUYhH5KN5nQ": {
+    "GraphQLLambdaVersionrqFdZZaqeFy4jDmazmsY3TsbpDjvUpsLKtNJnj1fVw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GraphQLLambdaFunction"
         },
-        "CodeSha256": "VfJuRGDlqoXe9w7sb0MO8yAY9uzD+NCq4Vc8HYlIMgU="
+        "CodeSha256": "gu2X/P6k9WSC5/0DS97AbJosrBmGI4MnAoPfXqepufk="
       }
     },
     "ApiGatewayRestApi": {
@@ -267,7 +268,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1573582032730": {
+    "ApiGatewayDeployment1574188022975": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -327,7 +328,7 @@
     "GraphQLLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GraphQLLambdaVersionD1lOD4EJm97UkidSOuhEPy7qKd4ssrUYhH5KN5nQ"
+        "Ref": "GraphQLLambdaVersionrqFdZZaqeFy4jDmazmsY3TsbpDjvUpsLKtNJnj1fVw"
       }
     },
     "ServiceEndpoint": {

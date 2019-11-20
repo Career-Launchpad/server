@@ -13,13 +13,14 @@ displayItem = function(err, data) {
 }
 
 module.exports = {
+    console.log("Entered Resolvers");
     studentResolver: function(id) {
         console.log('in student resolver ', id)
         const params = {
-            TableName: 'Students',
+            TableName: 'Student',
             Key: {
-                student_id: {
-                    N: id
+                id: {
+                    S: id
                 }
             }
         };

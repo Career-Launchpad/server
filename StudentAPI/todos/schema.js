@@ -29,7 +29,7 @@ const CompensationType = new GraphQLObjectType({
         id: { type: GraphQLID },
         value: { type: GraphQLInt },
         type: { type: GraphQLString },
-        bonuses: { 
+        bonuses: {
             type: GraphQLList(BonusType),
             args: { id: { type: GraphQLID }},
             resolve(parent, args) {
@@ -49,7 +49,7 @@ const OfferType = new GraphQLObjectType({
       accepted: { type: GraphQLBoolean },
       company_id: { type: GraphQLID },
       location: { type: GraphQLString },
-      compensations: { 
+      compensations: {
           type: GraphQLList(CompensationType),
           args: { id: { type: GraphQLID }},
           resolve(parent, args) {
@@ -64,12 +64,12 @@ const OfferType = new GraphQLObjectType({
 const StudentType = new GraphQLObjectType({
     name: "student",
     fields: () => ({
-      student_id: { type: GraphQLID },
+      id: { type: GraphQLID },
       college_id: { type: GraphQLID },
       major: { type: GraphQLString },
       gender: { type: GraphQLString },
       ethnicity: { type: GraphQLString },
-      offers: { 
+      offers: {
           type: GraphQLList(OfferType),
           args: { id: { type: GraphQLID }},
           resolve(parent, args) {
@@ -85,7 +85,7 @@ const VisualizationType = new GraphQLObjectType({
     name: 'visualization',
     fields: () => ({
         id: { type: GraphQLID },
-        histogram: { 
+        histogram: {
             type: GraphQLString,
             args: { filters: { type: GraphQLString } },
             resolve(parent, args) {
@@ -95,7 +95,7 @@ const VisualizationType = new GraphQLObjectType({
                 resolver.histogramResolver(parent.args.filters);
             }
         },
-        map: { 
+        map: {
           type: GraphQLString,
           args: { filters: { type: GraphQLString } },
             resolve(parent, args) {
@@ -105,7 +105,7 @@ const VisualizationType = new GraphQLObjectType({
                 resolver.mapResolver(parent.args.filters);
             }
         },
-        barChart: { 
+        barChart: {
           type: GraphQLString,
           args: { filters: { type: GraphQLString } },
           resolve(parent, args) {
@@ -149,6 +149,9 @@ fields: {
 }
 });
 
-module.exports = new GraphQLSchema({
-  query: RootQuery
-});
+const graphqlConfig = {
+    schema: new GraphQLSchema({query: RootQuery}),
+    graphiql: true,
+}
+
+export default graphqlConfig

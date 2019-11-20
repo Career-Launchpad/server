@@ -21,7 +21,7 @@ provider:
 
 functions:
   graphQL:
-    handler: todos/resolvers
+    handler: todos/graphQL.graphQL
     events:
       - http:
           path: todos
