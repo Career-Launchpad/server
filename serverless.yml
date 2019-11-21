@@ -1,4 +1,4 @@
-service: students-rest-api-with-dynamodb
+service: career-debut-lambdas
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
@@ -34,5 +34,5 @@ functions:
     events:
       - http:
           path: graphql
-          method: get
+          method: post
           cors: true
