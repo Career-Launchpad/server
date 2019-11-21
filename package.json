@@ -7,7 +7,7 @@
   "scripts": {
     "graphql": "nodemon src/graphql/index.js --exec babel-node",
     "graphql-lambda": "webpack --mode=production && ./node_modules/.bin/sls invoke local -f graphql --data {}",
-    "graphql-deploy": "webpack --mode=production && sls deploy"
+    "deploy": "webpack --mode=production && sls deploy"
   },
   "husky": {
     "hooks": {
