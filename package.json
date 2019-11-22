@@ -5,9 +5,10 @@
   "author": "",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
+    "deploy": "webpack --mode=production && sls deploy",
     "graphql": "nodemon src/graphql/index.js --exec babel-node",
-    "graphql-lambda": "webpack --mode=production && ./node_modules/.bin/sls invoke local -f graphql --data {}",
-    "deploy": "webpack --mode=production && sls deploy"
+    "graphql-lambda": "webpack --mode=production && ./node_modules/.bin/sls invoke local -f graphql --data {}"
   },
   "husky": {
     "hooks": {
@@ -35,6 +36,7 @@
     "babel-minify-webpack-plugin": "^0.3.1",
     "babel-preset-minify": "^0.5.1",
     "husky": "^3.1.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.4",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
