@@ -1,11 +1,3 @@
-const promisify = fn =>
-  new Promise((resolve, reject) => {
-    fn((err, result) => {
-      if (err) reject(err);
-      else resolve(result);
-    });
-  });
-
 const StudentResolver = (db, args) => {
   const params = {
     TableName: "Student",
@@ -13,11 +5,13 @@ const StudentResolver = (db, args) => {
       id: args.user_id
     }
   };
-  return promisify(callback => {
-    db.get(params, callback);
-  }).then(result => {
-    if (!result.Item) return { id: args.user_id };
-    return result.Item;
+  return new Promise((resolve, reject) => {
+    db.get(params, (err, result) => {
+      if (err) reject(err);
+      if (!result.Item)
+        reject(new RangeError(`Student with id: ${args.user_id} not found`));
+      return resolve(result.Item);
+    });
   });
 };
 
