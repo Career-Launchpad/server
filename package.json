@@ -5,6 +5,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
+    "start": "node ./lambdas/graphql.js",
     "graphql": "nodemon src/graphql/index.js --exec babel-node",
     "graphql-lambda": "webpack --mode=production && ./node_modules/.bin/sls invoke local -f graphql --data {}",
     "deploy": "webpack --mode=production && sls deploy"

@@ -2,68 +2,220 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLSchema,
-  GraphQLID
+  GraphQLList,
+  GraphQLBoolean,
+  GraphQLInputObjectType,
+  GraphQLFloat,
+  GraphQLInt
 } from "graphql";
 
 import { globalIdField, fromGlobalId, nodeDefinitions } from "graphql-relay";
 
-import { StudentResolver } from "./resolvers";
+import {
+  GetStudentResolver,
+  GetStudentsResolver,
+  GetOfferResolver,
+  PostOfferResolver,
+  PostStudentResolver
+} from "./resolvers";
 
 let Schema = db => {
-  const nodeDefs = nodeDefinitions(
-    globalId => {
-      let { type } = fromGlobalId(globalId);
-      if (type === "store") return store;
-      return null;
+  // const nodeDefs = nodeDefinitions(
+  //   globalId => {
+  //     let { type } = fromGlobalId(globalId);
+  //     if (type === "store") return store;
+  //     return null;
+  //   },
+  //   obj => {
+  //     if (obj instanceof Store) return Store;
+  //     return null;
+  //   }
+  // );
+
+  const student = {
+    id: { type: GraphQLString },
+    college_id: { type: GraphQLString },
+    major: { type: GraphQLString },
+    gender: { type: GraphQLString },
+    ethnicity: { type: GraphQLString },
+    last_authentication: { type: GraphQLString }
+  };
+
+  const offer = {
+    id: { type: GraphQLString },
+    type: { type: GraphQLString },
+    accepted: { type: GraphQLBoolean },
+    company_id: { type: GraphQLString },
+    flag: { type: GraphQLBoolean },
+    student_id: { type: GraphQLString },
+    location: {
+      city: { type: GraphQLString },
+      state: { type: GraphQLString },
+      country: { type: GraphQLString }
     },
-    obj => {
-      if (obj instanceof Store) return Store;
-      return null;
-    }
-  );
+    compensation: {}
+  };
+
+  // const compensation = {
+  //   value: { type: GraphQLFloat },
+  //   type: { type: GraphQLString},
+  //   bonuses: { type: GraphQLList(Bonus) }
+  // }
+
+  const location = {
+    city: { type: GraphQLString },
+    state: { type: GraphQLString },
+    country: { type: GraphQLString }
+  };
+
+  const bonus = {
+    value: { type: GraphQLFloat },
+    type: { type: GraphQLString },
+    repeat_interval: { type: GraphQLString },
+    repeat_count: { type: GraphQLInt },
+    immediate: { type: GraphQLBoolean },
+    description: { type: GraphQLString }
+  };
+
+  const Location = new GraphQLObjectType({
+    name: "location",
+    fields: () => location
+  });
+
+  const LocationInput = new GraphQLInputObjectType({
+    name: "locationInput",
+    fields: () => location
+  });
+
+  const Bonus = new GraphQLObjectType({
+    name: "bonus",
+    fields: () => ({
+      value: { type: GraphQLFloat },
+      type: { type: GraphQLString },
+      repeat_interval: { type: GraphQLString },
+      repeat_count: { type: GraphQLInt },
+      immediate: { type: GraphQLBoolean },
+      description: { type: GraphQLString }
+    })
+  });
+
+  const StudentInput = new GraphQLInputObjectType({
+    name: "studentInput",
+    fields: () => ({
+      id: { type: GraphQLString },
+      college_id: { type: GraphQLString },
+      major: { type: GraphQLString },
+      gender: { type: GraphQLString },
+      ethnicity: { type: GraphQLString },
+      last_authentication: { type: GraphQLString }
+    })
+  });
+
+  const OfferInput = new GraphQLInputObjectType({
+    name: "offerInput",
+    fields: () => ({
+      id: { type: GraphQLString },
+      type: { type: GraphQLString },
+      accepted: { type: GraphQLBoolean },
+      company_id: { type: GraphQLString },
+      flag: { type: GraphQLBoolean },
+      student_id: { type: GraphQLString },
+      location: { type: LocationInput }
+      // compensation: {}
+    })
+  });
 
   const Student = new GraphQLObjectType({
     name: "student",
     fields: () => ({
-      id: { type: GraphQLID },
-      college_id: { type: GraphQLID },
+      id: { type: GraphQLString },
+      college_id: { type: GraphQLString },
       major: { type: GraphQLString },
       gender: { type: GraphQLString },
-      ethnicity: { type: GraphQLString }
-      // offers: {
-      //   type: GraphQLList(Offer),
-      //   args: { id: { type: GraphQLID } },
-      //   resolve(parent, args) {
-      //     console.log(parent);
-      //     console.log(args);
-      //   }
-      // },
+      last_authentication: { type: GraphQLString },
+      security_level: { type: GraphQLString },
+      ethnicity: { type: GraphQLString },
+      offers: {
+        type: GraphQLList(Offer),
+        args: { student_id: { type: GraphQLString } },
+        resolve(parent, args) {
+          console.log(parent);
+          console.log(args);
+        }
+      }
     })
   });
 
-  const Store = new GraphQLObjectType({
+  const Offer = new GraphQLObjectType({
+    name: "offer",
+    fields: () => ({
+      id: { type: GraphQLString },
+      type: { type: GraphQLString },
+      accepted: { type: GraphQLBoolean },
+      company_id: { type: GraphQLString },
+      flag: { type: GraphQLBoolean },
+      student_id: { type: GraphQLString },
+      location: { type: Location }
+    })
+  });
+
+  const Query = new GraphQLObjectType({
     name: "store",
     fields: () => ({
-      id: globalIdField("store"),
+      id: globalIdField("query"),
       student: {
         type: Student,
         args: {
-          user_id: { type: GraphQLString }
+          id: { type: GraphQLString }
         },
-        resolve: async (_, args) => StudentResolver(db, args)
+        resolve: async (_, args) => GetStudentResolver(db, args)
+      },
+      offer: {
+        type: Offer,
+        args: {
+          id: { type: GraphQLString }
+        },
+        resolve: async (_, args) => GetOfferResolver(db, args)
+      },
+      students: {
+        type: GraphQLList(Student),
+        args: {
+          gender: { type: GraphQLString }
+        },
+        resolve: async (_, args) => GetStudentsResolver(db, args)
       }
-    }),
-    interfaces: [nodeDefs.nodeInterface]
+    })
+    // interfaces: [nodeDefs.nodeInterface]
   });
 
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: "query",
       fields: () => ({
-        node: nodeDefs.nodeField,
+        id: globalIdField("store"),
         store: {
-          type: Store,
-          resolve: () => Store
+          type: Query,
+          resolve: () => Query
+        }
+      })
+    }),
+    mutation: new GraphQLObjectType({
+      name: "mutation",
+      fields: () => ({
+        id: globalIdField("mutation"),
+        student: {
+          type: Student,
+          args: {
+            student: { type: StudentInput }
+          },
+          resolve: async (_, args) => PostStudentResolver(db, args)
+        },
+        offer: {
+          type: Offer,
+          args: {
+            offer: { type: OfferInput }
+          },
+          resolve: async (_, args) => PostOfferResolver(db, args)
         }
       })
     })
