@@ -32,42 +32,6 @@ let Schema = db => {
   //   }
   // );
 
-  const student = {
-    id: { type: GraphQLString },
-    college_id: { type: GraphQLString },
-    major: { type: GraphQLString },
-    gender: { type: GraphQLString },
-    ethnicity: { type: GraphQLString },
-    last_authentication: { type: GraphQLString }
-  };
-
-  const offer = {
-    id: { type: GraphQLString },
-    type: { type: GraphQLString },
-    accepted: { type: GraphQLBoolean },
-    company_id: { type: GraphQLString },
-    flag: { type: GraphQLBoolean },
-    student_id: { type: GraphQLString },
-    location: {
-      city: { type: GraphQLString },
-      state: { type: GraphQLString },
-      country: { type: GraphQLString }
-    },
-    compensation: {}
-  };
-
-  // const compensation = {
-  //   value: { type: GraphQLFloat },
-  //   type: { type: GraphQLString},
-  //   bonuses: { type: GraphQLList(Bonus) }
-  // }
-
-  const location = {
-    city: { type: GraphQLString },
-    state: { type: GraphQLString },
-    country: { type: GraphQLString }
-  };
-
   const bonus = {
     value: { type: GraphQLFloat },
     type: { type: GraphQLString },
@@ -77,37 +41,74 @@ let Schema = db => {
     description: { type: GraphQLString }
   };
 
+  const Bonus = new GraphQLObjectType({
+    name: "bonus",
+    fields: () => bonus
+  });
+
+  const compensation = {
+    value: { type: GraphQLFloat },
+    type: { type: GraphQLString },
+    bonuses: { type: GraphQLList(Bonus) }
+  };
+
+  const location = {
+    city: { type: GraphQLString },
+    state: { type: GraphQLString },
+    country: { type: GraphQLString }
+  };
+
+  const student = {
+    id: { type: GraphQLString },
+    college_id: { type: GraphQLString },
+    major: { type: GraphQLString },
+    gender: { type: GraphQLString },
+    ethnicity: { type: GraphQLString },
+    last_authentication: { type: GraphQLString }
+  };
+
   const Location = new GraphQLObjectType({
     name: "location",
     fields: () => location
   });
+
+  const Compensation = new GraphQLObjectType({
+    name: "compensation",
+    fields: () => compensation
+  });
+
+  const offer = {
+    id: { type: GraphQLString },
+    type: { type: GraphQLString },
+    accepted: { type: GraphQLBoolean },
+    company_id: { type: GraphQLString },
+    flag: { type: GraphQLBoolean },
+    student_id: { type: GraphQLString },
+    location: { type: Location },
+    compensation: { type: Compensation }
+  };
 
   const LocationInput = new GraphQLInputObjectType({
     name: "locationInput",
     fields: () => location
   });
 
-  const Bonus = new GraphQLObjectType({
-    name: "bonus",
+  const BonusInput = new GraphQLInputObjectType({
+    name: "bonusInput",
+    fields: () => bonus
+  });
+
+  const Offer = new GraphQLObjectType({
+    name: "offer",
+    fields: () => offer
+  });
+
+  const CompensationInput = new GraphQLInputObjectType({
+    name: "compensationInput",
     fields: () => ({
       value: { type: GraphQLFloat },
       type: { type: GraphQLString },
-      repeat_interval: { type: GraphQLString },
-      repeat_count: { type: GraphQLInt },
-      immediate: { type: GraphQLBoolean },
-      description: { type: GraphQLString }
-    })
-  });
-
-  const StudentInput = new GraphQLInputObjectType({
-    name: "studentInput",
-    fields: () => ({
-      id: { type: GraphQLString },
-      college_id: { type: GraphQLString },
-      major: { type: GraphQLString },
-      gender: { type: GraphQLString },
-      ethnicity: { type: GraphQLString },
-      last_authentication: { type: GraphQLString }
+      bonuses: { type: GraphQLList(BonusInput) }
     })
   });
 
@@ -120,8 +121,8 @@ let Schema = db => {
       company_id: { type: GraphQLString },
       flag: { type: GraphQLBoolean },
       student_id: { type: GraphQLString },
-      location: { type: LocationInput }
-      // compensation: {}
+      location: { type: LocationInput },
+      compensation: { type: CompensationInput }
     })
   });
 
@@ -146,17 +147,9 @@ let Schema = db => {
     })
   });
 
-  const Offer = new GraphQLObjectType({
-    name: "offer",
-    fields: () => ({
-      id: { type: GraphQLString },
-      type: { type: GraphQLString },
-      accepted: { type: GraphQLBoolean },
-      company_id: { type: GraphQLString },
-      flag: { type: GraphQLBoolean },
-      student_id: { type: GraphQLString },
-      location: { type: Location }
-    })
+  const StudentInput = new GraphQLInputObjectType({
+    name: "studentInput",
+    fields: () => student
   });
 
   const Query = new GraphQLObjectType({
