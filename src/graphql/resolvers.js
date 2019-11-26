@@ -48,12 +48,17 @@ const GetOfferResolver = (db, args) => {
 
 const PostOfferResolver = (db, args) => {
   const params = {
-    TableName: "Offer",
-    Item: args
+    TableName: "Student",
+    Key: args.id,
+    UpdateExpression: "set offer = :o",
+    ExpressionAttributeValues: {
+      ":o": args.offer
+    },
+    ReturnValues: "UPDATED_NEW"
   };
   console.log("in post offer resolver" + args);
   return promisify(callback => {
-    db.put(params, callback);
+    db.update(params, callback);
   }).then(result => {
     if (!result.Item) return args;
     return result.Item;
