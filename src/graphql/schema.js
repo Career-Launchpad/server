@@ -116,13 +116,21 @@ let Schema = db => {
     name: "offerInput",
     fields: () => ({
       id: { type: GraphQLString },
-      type: { type: GraphQLString },
-      accepted: { type: GraphQLBoolean },
-      company_id: { type: GraphQLString },
-      flag: { type: GraphQLBoolean },
-      student_id: { type: GraphQLString },
-      location: { type: LocationInput },
-      compensation: { type: CompensationInput }
+      offer: {
+        type: new GraphQLInputObjectType({
+          name: "offerInput2",
+          fields: () => ({
+            id: { type: GraphQLString },
+            type: { type: GraphQLString },
+            accepted: { type: GraphQLBoolean },
+            company_id: { type: GraphQLString },
+            flag: { type: GraphQLBoolean },
+            student_id: { type: GraphQLString },
+            location: { type: LocationInput },
+            compensation: { type: CompensationInput }
+          })
+        })
+      }
     })
   });
 

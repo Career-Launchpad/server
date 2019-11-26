@@ -47,33 +47,45 @@ const GetOfferResolver = (db, args) => {
 };
 
 const PostOfferResolver = (db, args) => {
-  const offer = args.offer;
+  const offer = args.offer.offer;
+  console.log(args);
   const company = offer.company_id;
+  console.log(company);
   const params1 = {
     TableName: "Company",
     Key: company
   };
-  const newcompany = promisify(callback => {
+  var newcompany;
+
+  promisify(callback => {
     db.get(params1, callback);
   }).then(result => {
-    if (!result.Item) return "Need to create company";
-    return result.Item.id;
+    if (!result.Item) {
+      console.log("NO ITEM");
+    }
+    console.log("Data Id: " + data.id);
+    newcompany = data.id;
   });
+
   offer.company_id = newcompany;
+  console.log("ID = " + args.offer.id);
+  console.log("newcompany" + newcompany);
+  console.log(offer);
   const params = {
     TableName: "Student",
-    Key: args.id,
+    Key: args.offer.id,
     UpdateExpression: "set offer = :o",
     ExpressionAttributeValues: {
       ":o": offer
     },
     ReturnValues: "UPDATED_NEW"
   };
-  console.log("in post offer resolver" + args);
+  console.log("in post offer resolver");
+  console.log(args);
   return promisify(callback => {
     db.update(params, callback);
   }).then(result => {
-    if (!result.Item) return args;
+    if (!result.Item) return args.offer;
     return result.Item;
   });
 };
