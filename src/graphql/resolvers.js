@@ -47,13 +47,31 @@ const GetOfferResolver = (db, args) => {
 };
 
 const PostOfferResolver = (db, args) => {
+  const offer = args.offer;
+  const company = offer.company_id;
+  const params1 = {
+    TableName: "Company",
+    Key: company
+  };
+  const newcompany = promisify(callback => {
+    db.get(params1, callback);
+  }).then(result => {
+    if (!result.Item) return "Need to create company";
+    return result.Item.id;
+  });
+  offer.company_id = newcompany;
   const params = {
-    TableName: "Offer",
-    Item: args
+    TableName: "Student",
+    Key: args.id,
+    UpdateExpression: "set offer = :o",
+    ExpressionAttributeValues: {
+      ":o": offer
+    },
+    ReturnValues: "UPDATED_NEW"
   };
   console.log("in post offer resolver" + args);
   return promisify(callback => {
-    db.put(params, callback);
+    db.update(params, callback);
   }).then(result => {
     if (!result.Item) return args;
     return result.Item;
