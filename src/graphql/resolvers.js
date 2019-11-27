@@ -49,44 +49,36 @@ const GetOfferResolver = (db, args) => {
 const PostOfferResolver = (db, args) => {
   const offer = args.offer.offer;
   console.log(args);
-  const company = offer.company_id;
-  console.log(company);
   const params1 = {
     TableName: "Company",
-    Key: company
+    Key: { id: offer.company_id }
   };
-  var newcompany;
 
-  promisify(callback => {
+  promisify(async callback => {
     db.get(params1, callback);
-  }).then(result => {
+  }).then(async result => {
+    console.log(result);
     if (!result.Item) {
       console.log("NO ITEM");
     }
-    console.log("Data Id: " + data.id);
-    newcompany = data.id;
-  });
-
-  offer.company_id = newcompany;
-  console.log("ID = " + args.offer.id);
-  console.log("newcompany" + newcompany);
-  console.log(offer);
-  const params = {
-    TableName: "Student",
-    Key: args.offer.id,
-    UpdateExpression: "set offer = :o",
-    ExpressionAttributeValues: {
-      ":o": offer
-    },
-    ReturnValues: "UPDATED_NEW"
-  };
-  console.log("in post offer resolver");
-  console.log(args);
-  return promisify(callback => {
-    db.update(params, callback);
-  }).then(result => {
-    if (!result.Item) return args.offer;
-    return result.Item;
+    const newcompany = result.id;
+    offer.company_id = newcompany;
+    const params = {
+      TableName: "Student",
+      Key: { id: args.offer.id },
+      UpdateExpression: "set offer = :o",
+      ExpressionAttributeValues: {
+        ":o": offer
+      },
+      ReturnValues: "UPDATED_NEW"
+    };
+    let p = await promisify(callback => {
+      db.update(params, callback);
+    }).then(result => {
+      if (!result.Item) return args.offer;
+      return result.Item;
+    });
+    return p;
   });
 };
 
