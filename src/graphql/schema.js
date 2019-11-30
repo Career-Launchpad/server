@@ -103,31 +103,22 @@ let Schema = db => {
     fields: () => offer
   });
 
-  const CompensationInput = new GraphQLInputObjectType({
-    name: "compensationInput",
-    fields: () => ({
-      value: { type: GraphQLFloat },
-      type: { type: GraphQLString },
-      bonuses: { type: GraphQLList(BonusInput) }
-    })
-  });
-
   const OfferInput = new GraphQLInputObjectType({
     name: "offerInput",
     fields: () => ({
-      id: { type: GraphQLString },
       offer: {
         type: new GraphQLInputObjectType({
           name: "offerInput2",
           fields: () => ({
-            id: { type: GraphQLString },
+            student_id: { type: GraphQLString },
             type: { type: GraphQLString },
             accepted: { type: GraphQLBoolean },
             company_id: { type: GraphQLString },
             flag: { type: GraphQLBoolean },
-            student_id: { type: GraphQLString },
             location: { type: LocationInput },
-            compensation: { type: CompensationInput }
+            wage: { type: GraphQLFloat },
+            workType: { type: GraphQLString }
+            // bonuses: {type: GraphQLList}
           })
         })
       }

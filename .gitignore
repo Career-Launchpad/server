@@ -1,5 +1,6 @@
 .DS_Store
 .serverless
 .vscode
+yarn.**
 dist/**
 node_modules/**

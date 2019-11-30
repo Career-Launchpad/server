@@ -1,3 +1,5 @@
+const uuidv4 = require("uuid/v4");
+
 const promisify = fn =>
   new Promise((resolve, reject) => {
     fn((err, result) => {
@@ -46,40 +48,41 @@ const GetOfferResolver = (db, args) => {
   });
 };
 
-const PostOfferResolver = (db, args) => {
+const PostOfferResolver = async (db, args) => {
   const offer = args.offer.offer;
-  console.log(args);
-  const params1 = {
+
+  const location = offer.location;
+  delete offer.location;
+
+  const location_id = `${location.city}${location.state}${location.country}`.replace(
+    /\s/g,
+    ""
+  );
+
+  const locationParams = {
+    TableName: "Location",
+    Item: { location_id, ...location }
+  };
+
+  await db.put(locationParams).promise();
+
+  const companyParams = {
     TableName: "Company",
     Key: { id: offer.company_id }
   };
+  let company = await db.get(companyParams).promise();
 
-  promisify(async callback => {
-    db.get(params1, callback);
-  }).then(async result => {
-    console.log(result);
-    if (!result.Item) {
-      console.log("NO ITEM");
+  const postOfferParams = {
+    TableName: "Offer",
+    Item: {
+      ...args.offer.offer,
+      companyName: company.Item.name,
+      timestamp: new Date().getTime(),
+      offer_id: uuidv4(),
+      location_id
     }
-    const newcompany = result.id;
-    offer.company_id = newcompany;
-    const params = {
-      TableName: "Student",
-      Key: { id: args.offer.id },
-      UpdateExpression: "set offer = :o",
-      ExpressionAttributeValues: {
-        ":o": offer
-      },
-      ReturnValues: "UPDATED_NEW"
-    };
-    let p = await promisify(callback => {
-      db.update(params, callback);
-    }).then(result => {
-      if (!result.Item) return args.offer;
-      return result.Item;
-    });
-    return p;
-  });
+  };
+  await db.put(postOfferParams).promise();
 };
 
 const PostStudentResolver = (db, args) => {
