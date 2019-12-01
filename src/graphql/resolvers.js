@@ -23,6 +23,7 @@ const GetStudentResolver = (db, args) => {
   });
 };
 
+// TODO: Finish GetStudentsResolver
 const GetStudentsResolver = (db, args) => {
   const params = {
     TableName: "Student",
@@ -90,8 +91,6 @@ const PostStudentResolver = (db, args) => {
     TableName: "Student",
     Item: args.student
   };
-  console.log("in post student resolver");
-  console.log(args);
   return promisify(callback => {
     db.put(params, callback);
   }).then(result => {

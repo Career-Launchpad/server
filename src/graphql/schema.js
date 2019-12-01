@@ -20,18 +20,6 @@ import {
 } from "./resolvers";
 
 let Schema = db => {
-  // const nodeDefs = nodeDefinitions(
-  //   globalId => {
-  //     let { type } = fromGlobalId(globalId);
-  //     if (type === "store") return store;
-  //     return null;
-  //   },
-  //   obj => {
-  //     if (obj instanceof Store) return Store;
-  //     return null;
-  //   }
-  // );
-
   const bonus = {
     value: { type: GraphQLFloat },
     type: { type: GraphQLString },
@@ -117,8 +105,8 @@ let Schema = db => {
             flag: { type: GraphQLBoolean },
             location: { type: LocationInput },
             wage: { type: GraphQLFloat },
-            workType: { type: GraphQLString }
-            // bonuses: {type: GraphQLList}
+            workType: { type: GraphQLString },
+            bonuses: { type: GraphQLList(BonusInput) }
           })
         })
       }
@@ -177,7 +165,6 @@ let Schema = db => {
         resolve: async (_, args) => GetStudentsResolver(db, args)
       }
     })
-    // interfaces: [nodeDefs.nodeInterface]
   });
 
   const schema = new GraphQLSchema({
