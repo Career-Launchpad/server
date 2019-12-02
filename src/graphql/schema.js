@@ -48,6 +48,8 @@ let Schema = db => {
 
   const student = {
     id: { type: GraphQLString },
+    firstname: { type: GraphQLString },
+    lastname: { type: GraphQLString },
     college_id: { type: GraphQLString },
     major: { type: GraphQLString },
     gender: { type: GraphQLString },
@@ -117,6 +119,8 @@ let Schema = db => {
     name: "student",
     fields: () => ({
       id: { type: GraphQLString },
+      firstname: { type: GraphQLString },
+      lastname: { type: GraphQLString },
       college_id: { type: GraphQLString },
       major: { type: GraphQLString },
       gender: { type: GraphQLString },
