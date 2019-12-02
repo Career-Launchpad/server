@@ -15,6 +15,7 @@ import {
   GetStudentResolver,
   GetStudentsResolver,
   GetOfferResolver,
+  GetOffersResolver,
   PostOfferResolver,
   PostStudentResolver
 } from "./resolvers";
@@ -62,10 +63,10 @@ let Schema = db => {
     position_type: { type: GraphQLString },
     position_title: { type: GraphQLString },
     accepted: { type: GraphQLBoolean },
-    extended: { type: GraphQLString },
-    deadline: { type: GraphQLString },
+    extended: { type: GraphQLInt }, // timestamp
+    deadline: { type: GraphQLInt }, // timestamp
     academic_year: { type: GraphQLString },
-    company_id: { type: GraphQLString },
+    company_name: { type: GraphQLString },
     flag: { type: GraphQLBoolean },
     student_id: { type: GraphQLString },
     location: { type: Location },
@@ -100,8 +101,8 @@ let Schema = db => {
             position_type: { type: GraphQLString }, // full-time, part-time, internship, contractor
             position_title: { type: GraphQLString },
             accepted: { type: GraphQLBoolean },
-            extended: { type: GraphQLString },
-            deadline: { type: GraphQLString },
+            extended: { type: GraphQLInt }, // timestamp
+            deadline: { type: GraphQLInt }, // timestamp
             company_name: { type: GraphQLString },
             location: { type: LocationInput },
             wage_value: { type: GraphQLFloat },
@@ -160,6 +161,10 @@ let Schema = db => {
           id: { type: GraphQLString }
         },
         resolve: async (_, args) => GetOfferResolver(db, args)
+      },
+      offers: {
+        type: GraphQLList(Offer),
+        resolve: async _ => GetOffersResolver(db)
       },
       students: {
         type: GraphQLList(Student),
