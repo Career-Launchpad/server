@@ -25,7 +25,7 @@ let Schema = db => {
     type: { type: GraphQLString },
     repeat_interval: { type: GraphQLString },
     repeat_count: { type: GraphQLInt },
-    immediate: { type: GraphQLBoolean },
+    one_time: { type: GraphQLBoolean },
     description: { type: GraphQLString }
   };
 
@@ -33,12 +33,6 @@ let Schema = db => {
     name: "bonus",
     fields: () => bonus
   });
-
-  const compensation = {
-    value: { type: GraphQLFloat },
-    type: { type: GraphQLString },
-    bonuses: { type: GraphQLList(Bonus) }
-  };
 
   const location = {
     city: { type: GraphQLString },
@@ -48,9 +42,11 @@ let Schema = db => {
 
   const student = {
     id: { type: GraphQLString },
+    email: { type: GraphQLString },
     firstname: { type: GraphQLString },
     lastname: { type: GraphQLString },
     college_id: { type: GraphQLString },
+    academic_year: { type: GraphQLString },
     major: { type: GraphQLString },
     gender: { type: GraphQLString },
     ethnicity: { type: GraphQLString },
@@ -62,21 +58,21 @@ let Schema = db => {
     fields: () => location
   });
 
-  const Compensation = new GraphQLObjectType({
-    name: "compensation",
-    fields: () => compensation
-  });
-
   const offer = {
     id: { type: GraphQLString },
-    type: { type: GraphQLString },
+    position_type: { type: GraphQLString },
+    position_title: { type: GraphQLString },
     accepted: { type: GraphQLBoolean },
+    extended: { type: GraphQLString },
+    deadline: { type: GraphQLString },
     academic_year: { type: GraphQLString },
     company_id: { type: GraphQLString },
     flag: { type: GraphQLBoolean },
     student_id: { type: GraphQLString },
     location: { type: Location },
-    compensation: { type: Compensation }
+    wage_value: { type: GraphQLFloat },
+    wage_type: { type: GraphQLString },
+    bonuses: { type: GraphQLList(Bonus) }
   };
 
   const LocationInput = new GraphQLInputObjectType({
@@ -102,14 +98,15 @@ let Schema = db => {
           name: "offerInput2",
           fields: () => ({
             student_id: { type: GraphQLString },
-            type: { type: GraphQLString },
+            position_type: { type: GraphQLString }, // full-time, part-time, internship, contractor
+            position_title: { type: GraphQLString },
             accepted: { type: GraphQLBoolean },
-            academic_year: { type: GraphQLString },
-            company_id: { type: GraphQLString },
-            flag: { type: GraphQLBoolean },
+            extended: { type: GraphQLString },
+            deadline: { type: GraphQLString },
+            company_name: { type: GraphQLString },
             location: { type: LocationInput },
-            wage: { type: GraphQLFloat },
-            workType: { type: GraphQLString },
+            wage_value: { type: GraphQLFloat },
+            wage_type: { type: GraphQLString }, // hourly, salary, onetime payment
             bonuses: { type: GraphQLList(BonusInput) }
           })
         })
@@ -121,9 +118,11 @@ let Schema = db => {
     name: "student",
     fields: () => ({
       id: { type: GraphQLString },
+      email: { type: GraphQLString },
       firstname: { type: GraphQLString },
       lastname: { type: GraphQLString },
-      college_id: { type: GraphQLString },
+      college_name: { type: GraphQLString },
+      academic_year: { type: GraphQLString },
       major: { type: GraphQLString },
       gender: { type: GraphQLString },
       last_authentication: { type: GraphQLString },
