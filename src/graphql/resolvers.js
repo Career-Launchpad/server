@@ -89,7 +89,10 @@ const PostOfferResolver = async (db, args) => {
 const PostStudentResolver = (db, args) => {
   const params = {
     TableName: "Student",
-    Item: args.student
+    Item: {
+      ...args.student,
+      id: uuidv4()
+    }
   };
   return promisify(callback => {
     db.put(params, callback);

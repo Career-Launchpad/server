@@ -41,7 +41,6 @@ let Schema = db => {
   };
 
   const student = {
-    id: { type: GraphQLString },
     email: { type: GraphQLString },
     firstname: { type: GraphQLString },
     lastname: { type: GraphQLString },
