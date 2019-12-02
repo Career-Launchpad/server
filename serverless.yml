@@ -29,7 +29,13 @@ package:
     - dist/**
 
 functions:
-  graphql:
+  graphql-get:
+    handler: dist/graphql.handler
+    events:
+      - http:
+          path: graphql
+          method: get
+  graphql-post:
     handler: dist/graphql.handler
     events:
       - http:
