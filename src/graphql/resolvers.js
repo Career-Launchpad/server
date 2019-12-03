@@ -75,7 +75,7 @@ const GetOffersResolver = async db => {
     let bonuses = await db.query(bonusesParams).promise();
     res.push({ ...offer, bonuses: bonuses.Items });
   }
-  return res;
+  return { edges: res };
 };
 
 const PostOfferResolver = async (db, args) => {

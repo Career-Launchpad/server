@@ -91,6 +91,13 @@ let Schema = db => {
     fields: () => offer
   });
 
+  const OfferConnection = new GraphQLObjectType({
+    name: "offerConnection",
+    fields: () => ({
+      edges: { type: GraphQLList(Offer) }
+    })
+  });
+
   const CreateOfferInput = new GraphQLInputObjectType({
     name: "createOfferInput",
     fields: () => ({
@@ -157,7 +164,7 @@ let Schema = db => {
         resolve: async (_, args) => GetOfferResolver(db, args)
       },
       offers: {
-        type: GraphQLList(Offer),
+        type: OfferConnection,
         resolve: async _ => GetOffersResolver(db)
       },
       students: {
