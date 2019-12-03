@@ -8,6 +8,7 @@ import {
   GraphQLFloat,
   GraphQLInt
 } from "graphql";
+import GraphQLTimestamp from "./GraphQLTimestamp";
 
 import { globalIdField, fromGlobalId, nodeDefinitions } from "graphql-relay";
 
@@ -50,7 +51,7 @@ let Schema = db => {
     major: { type: GraphQLString },
     gender: { type: GraphQLString },
     ethnicity: { type: GraphQLString },
-    last_authentication: { type: GraphQLString }
+    last_authentication: { type: GraphQLTimestamp }
   };
 
   const Location = new GraphQLObjectType({
@@ -63,8 +64,8 @@ let Schema = db => {
     position_type: { type: GraphQLString },
     position_title: { type: GraphQLString },
     accepted: { type: GraphQLBoolean },
-    extended: { type: GraphQLInt }, // timestamp
-    deadline: { type: GraphQLInt }, // timestamp
+    extended: { type: GraphQLTimestamp }, // timestamp
+    deadline: { type: GraphQLTimestamp }, // timestamp
     academic_year: { type: GraphQLString },
     company_name: { type: GraphQLString },
     flag: { type: GraphQLBoolean },
@@ -90,27 +91,27 @@ let Schema = db => {
     fields: () => offer
   });
 
-  const OfferInput = new GraphQLInputObjectType({
-    name: "offerInput",
+  const OfferConnection = new GraphQLObjectType({
+    name: "offerConnection",
     fields: () => ({
-      offer: {
-        type: new GraphQLInputObjectType({
-          name: "offerInput2",
-          fields: () => ({
-            student_id: { type: GraphQLString },
-            position_type: { type: GraphQLString }, // full-time, part-time, internship, contractor
-            position_title: { type: GraphQLString },
-            accepted: { type: GraphQLBoolean },
-            extended: { type: GraphQLInt }, // timestamp
-            deadline: { type: GraphQLInt }, // timestamp
-            company_name: { type: GraphQLString },
-            location: { type: LocationInput },
-            wage_value: { type: GraphQLFloat },
-            wage_type: { type: GraphQLString }, // hourly, salary, onetime payment
-            bonuses: { type: GraphQLList(BonusInput) }
-          })
-        })
-      }
+      edges: { type: GraphQLList(Offer) }
+    })
+  });
+
+  const CreateOfferInput = new GraphQLInputObjectType({
+    name: "createOfferInput",
+    fields: () => ({
+      student_id: { type: GraphQLString },
+      position_type: { type: GraphQLString }, // full-time, part-time, internship, contractor
+      position_title: { type: GraphQLString },
+      accepted: { type: GraphQLBoolean },
+      extended: { type: GraphQLTimestamp }, // timestamp
+      deadline: { type: GraphQLTimestamp }, // timestamp
+      company_name: { type: GraphQLString },
+      location: { type: LocationInput },
+      wage_value: { type: GraphQLFloat },
+      wage_type: { type: GraphQLString }, // hourly, salary, onetime payment
+      bonuses: { type: GraphQLList(BonusInput) }
     })
   });
 
@@ -125,7 +126,7 @@ let Schema = db => {
       academic_year: { type: GraphQLString },
       major: { type: GraphQLString },
       gender: { type: GraphQLString },
-      last_authentication: { type: GraphQLString },
+      last_authentication: { type: GraphQLTimestamp },
       security_level: { type: GraphQLString },
       ethnicity: { type: GraphQLString },
       offers: {
@@ -139,8 +140,8 @@ let Schema = db => {
     })
   });
 
-  const StudentInput = new GraphQLInputObjectType({
-    name: "studentInput",
+  const CreateStudentInput = new GraphQLInputObjectType({
+    name: "createStudentInput",
     fields: () => student
   });
 
@@ -163,7 +164,7 @@ let Schema = db => {
         resolve: async (_, args) => GetOfferResolver(db, args)
       },
       offers: {
-        type: GraphQLList(Offer),
+        type: OfferConnection,
         resolve: async _ => GetOffersResolver(db)
       },
       students: {
@@ -194,14 +195,14 @@ let Schema = db => {
         student: {
           type: Student,
           args: {
-            student: { type: StudentInput }
+            student: { type: CreateStudentInput }
           },
           resolve: async (_, args) => PostStudentResolver(db, args)
         },
         offer: {
           type: Offer,
           args: {
-            offer: { type: OfferInput }
+            offer: { type: CreateOfferInput }
           },
           resolve: async (_, args) => PostOfferResolver(db, args)
         }

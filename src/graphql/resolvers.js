@@ -75,11 +75,11 @@ const GetOffersResolver = async db => {
     let bonuses = await db.query(bonusesParams).promise();
     res.push({ ...offer, bonuses: bonuses.Items });
   }
-  return res;
+  return { edges: res };
 };
 
 const PostOfferResolver = async (db, args) => {
-  const offer = args.offer.offer;
+  const offer = args.offer;
 
   const location = offer.location;
   delete offer.location;
@@ -111,9 +111,9 @@ const PostOfferResolver = async (db, args) => {
   };
   let companyName = null;
   let company = await db.query(companyParams).promise();
-  companyName = company.Items[0].name;
   let uuid = uuidv4();
-
+  // companyName = company.Items[0].name;
+  console.log(company);
   if (company.Items.length === 0) {
     let addCompanyParams = {
       TableName: "Company",
@@ -121,22 +121,26 @@ const PostOfferResolver = async (db, args) => {
     };
     company = await db.put(addCompanyParams).promise();
     companyName = company.Items[0].name;
+  } else {
+    companyName = company.Items[0].name;
   }
 
   // upload bonuses to Bonus table
-  for await (let bonus of bonuses) {
-    const postBonusParams = {
-      TableName: "Bonus",
-      Item: {
-        id: uuid,
-        ...bonus
-      }
-    };
-    await db.put(postBonusParams).promise();
+  if (bonuses) {
+    for await (let bonus of bonuses) {
+      const postBonusParams = {
+        TableName: "Bonus",
+        Item: {
+          id: uuid,
+          ...bonus
+        }
+      };
+      await db.put(postBonusParams).promise();
+    }
   }
 
   let uploadable = {
-    ...args.offer.offer,
+    ...args.offer,
     company_name: companyName,
     timestamp: new Date().getTime(),
     offer_id: uuidv4(),
@@ -150,20 +154,17 @@ const PostOfferResolver = async (db, args) => {
   return uploadable;
 };
 
-const PostStudentResolver = (db, args) => {
+const PostStudentResolver = async (db, args) => {
+  let uploadable = {
+    ...args.student,
+    id: uuidv4()
+  };
   const params = {
     TableName: "Student",
-    Item: {
-      ...args.student,
-      id: uuidv4()
-    }
+    Item: uploadable
   };
-  return promisify(callback => {
-    db.put(params, callback);
-  }).then(result => {
-    if (!result.Item) return args;
-    return result.Item;
-  });
+  await db.put(params).promise();
+  return uploadable;
 };
 
 export {
