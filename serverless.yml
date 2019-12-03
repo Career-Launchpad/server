@@ -1,4 +1,4 @@
-service: career-debut-lambdas
+service: careerdebut-lambdas
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
@@ -7,7 +7,6 @@ provider:
   runtime: nodejs10.x
   environment:
     DYNAMODB_TABLE1: Student
-    DYNAMODB_TABLE2: College
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -17,7 +16,7 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:us-east-1:095585818143:table/Student"
+      Resource: "arn:aws:dynamodb:us-east-1:095585818143:table/*"
 
 package:
   exclude:
@@ -35,9 +34,11 @@ functions:
       - http:
           path: graphql
           method: get
+          cors: true
   graphql-post:
     handler: dist/graphql.handler
     events:
       - http:
           path: graphql
           method: post
+          cors: true
