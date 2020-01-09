@@ -10,6 +10,17 @@
     "graphql": "nodemon src/graphql/index.js --exec babel-node",
     "graphql-lambda": "webpack --mode=production && ./node_modules/.bin/sls invoke local -f graphql --data {}"
   },
+  "jest": {
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "statements": 5
+      }
+    },
+    "collectCoverageFrom": [
+      "src/**/resolvers/**/*.{js,jsx}"
+    ]
+  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
@@ -19,6 +30,7 @@
     "aws-sdk": "^2.568.0",
     "aws-serverless-express": "^3.3.6",
     "axios": "^0.19.0",
+    "babel-jest": "^24.9.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
