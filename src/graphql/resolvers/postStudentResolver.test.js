@@ -1,19 +1,19 @@
 import uuidv4 from "uuid/v4";
-import { PostStudentResolver, GetStudentResolver } from "./resolvers";
+import PostStudentResolver from "./postStudentResolver";
 
 describe("Resolvers", () => {
   it("PostStudentResolver", async () => {
     const testcases = [
       {
         desc: "should return student object with the given args and a uuid",
+        db: {
+          put: jest.fn().mockReturnValue({ promise: () => {} })
+        },
         args: {
           student: {
             firstname: "Braden",
             lastname: "Watkins"
           }
-        },
-        db: {
-          put: jest.fn().mockReturnValue({ promise: () => {} })
         },
         expectedDBCall: {
           TableName: "Student",

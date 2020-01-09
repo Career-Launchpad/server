@@ -14,11 +14,11 @@
     "collectCoverage": true,
     "coverageThreshold": {
       "global": {
-        "statements": 15
+        "statements": 5
       }
     },
     "collectCoverageFrom": [
-      "src/**/*resolvers.{js,jsx}"
+      "src/**/resolvers/**/*.{js,jsx}"
     ]
   },
   "husky": {
