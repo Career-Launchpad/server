@@ -9,7 +9,7 @@
     "offers": [
       {
         "type": "",
-        "accepted": "bool",
+        "accepted": "",
         "company_id": "int",
         "location": {
           "city": "",
