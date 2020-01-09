@@ -132,10 +132,9 @@ const CreateStudentInput = new GraphQLInputObjectType({
   fields: () => student
 });
 
-export default {
+export {
   BonusInput,
   BonusType,
-  CreateOfferInput,
   CreateOfferInput,
   CreateStudentInput,
   LocationInput,

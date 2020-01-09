@@ -1,11 +1,19 @@
+import { globalIdField } from "graphql-relay";
 import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLSchema,
   GraphQLList
 } from "graphql";
-import { globalIdField } from "graphql-relay";
-import * as Types from "./types";
+
+import {
+  StudentType,
+  OfferConnection,
+  OfferType,
+  CreateStudentInput,
+  CreateOfferInput
+} from "./types";
+
 import {
   GetStudentResolver,
   GetStudentsResolver,
@@ -16,30 +24,30 @@ import {
 } from "./resolvers/resolvers";
 
 let Schema = db => {
-  const Query = new GraphQLObjectType({
+  const QueryType = new GraphQLObjectType({
     name: "store",
     fields: () => ({
       id: globalIdField("query"),
       student: {
-        type: Types.StudentType,
+        type: StudentType,
         args: {
           id: { type: GraphQLString }
         },
         resolve: async (_, args) => GetStudentResolver(db, args)
       },
       offer: {
-        type: Types.OfferType,
+        type: OfferType,
         args: {
           id: { type: GraphQLString }
         },
         resolve: async (_, args) => GetOfferResolver(db, args)
       },
       offers: {
-        type: Types.OfferConnection,
+        type: OfferConnection,
         resolve: async _ => GetOffersResolver(db)
       },
       students: {
-        type: GraphQLList(Types.StudentType),
+        type: GraphQLList(StudentType),
         args: {
           gender: { type: GraphQLString }
         },
@@ -54,7 +62,7 @@ let Schema = db => {
       fields: () => ({
         id: globalIdField("store"),
         store: {
-          type: Query,
+          type: QueryType,
           resolve: () => Query
         }
       })
@@ -64,16 +72,16 @@ let Schema = db => {
       fields: () => ({
         id: globalIdField("mutation"),
         student: {
-          type: Types.StudentType,
+          type: StudentType,
           args: {
-            student: { type: Types.CreateStudentInput }
+            student: { type: CreateStudentInput }
           },
           resolve: async (_, args) => PostStudentResolver(db, args)
         },
         offer: {
-          type: Types.OfferType,
+          type: OfferType,
           args: {
-            offer: { type: Types.CreateOfferInput }
+            offer: { type: CreateOfferInput }
           },
           resolve: async (_, args) => PostOfferResolver(db, args)
         }
