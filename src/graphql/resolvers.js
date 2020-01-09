@@ -8,18 +8,19 @@ const promisify = fn =>
     });
   });
 
-const GetStudentResolver = (db, args) => {
+const GetStudentResolver = async (db, args) => {
   const params = {
     TableName: "Student",
     Key: {
       id: args.id
     }
   };
-  return promisify(callback => {
-    db.get(params, callback);
-  }).then(result => {
-    if (!result.Item) return { id: args.id };
-    return result.Item;
+  return await db.get(params, (err, res) => {
+    if (err) {
+      return err;
+    }
+    if (!res.Item) return { id: args.id };
+    return res.item;
   });
 };
 
