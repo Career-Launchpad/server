@@ -33,10 +33,9 @@ const PostOfferResolver = async (db, args) => {
   };
   let companyName = null;
   let company = await db.query(companyParams).promise();
-  let uuid = uuidv4();
-  // companyName = company.Items[0].name;
-  console.log(company);
+  let uuid;
   if (company.Items.length === 0) {
+    uuid = uuidv4();
     let addCompanyParams = {
       TableName: "Company",
       Item: { id: uuid, name: offer.company_name }
@@ -44,6 +43,7 @@ const PostOfferResolver = async (db, args) => {
     company = await db.put(addCompanyParams).promise();
     companyName = company.Items[0].name;
   } else {
+    uuid = company.Items[0].id;
     companyName = company.Items[0].name;
   }
 

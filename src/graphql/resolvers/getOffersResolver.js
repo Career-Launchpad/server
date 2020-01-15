@@ -3,7 +3,6 @@ const GetOffersResolver = async db => {
     TableName: "Offer"
   };
   let offers = await db.scan(params).promise();
-
   let res = [];
 
   for await (let offer of offers.Items) {
