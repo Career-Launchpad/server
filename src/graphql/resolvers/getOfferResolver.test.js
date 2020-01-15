@@ -53,9 +53,7 @@ describe("Resolvers", () => {
             offer_id: "1423"
           }
         },
-        expectedRetValue: {
-          offer_id: "1423"
-        }
+        expectedRetValue: {}
       }
     ];
 

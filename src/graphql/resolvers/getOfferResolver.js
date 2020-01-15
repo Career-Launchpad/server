@@ -7,10 +7,9 @@ const GetOfferResolver = async (db, args) => {
   };
   let offer = await db.get(params).promise();
   if (!offer.Item) {
-    return { offer_id: args.id };
-  } else {
-    return offer.Item;
+    return {};
   }
+  return offer.Item;
 };
 
 export default GetOfferResolver;

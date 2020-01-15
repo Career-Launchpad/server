@@ -1,4 +1,4 @@
-const uuidv4 = require("uuid/v4");
+import uuidv4 from "uuid/v4";
 
 const PostOfferResolver = async (db, args) => {
   const offer = args.offer;
@@ -19,7 +19,6 @@ const PostOfferResolver = async (db, args) => {
   };
 
   await db.put(locationParams).promise();
-
   const companyParams = {
     TableName: "Company",
     IndexName: "name-index",
@@ -47,7 +46,6 @@ const PostOfferResolver = async (db, args) => {
     companyName = company.Items[0].name;
   }
 
-  // upload bonuses to Bonus table
   if (bonuses) {
     for await (let bonus of bonuses) {
       const postBonusParams = {
@@ -68,10 +66,12 @@ const PostOfferResolver = async (db, args) => {
     offer_id: uuidv4(),
     location_id
   };
+
   const postOfferParams = {
     TableName: "Offer",
     Item: uploadable
   };
+
   await db.put(postOfferParams).promise();
   return uploadable;
 };
