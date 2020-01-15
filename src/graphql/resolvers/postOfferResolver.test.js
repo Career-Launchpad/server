@@ -124,8 +124,7 @@ testcases.forEach(
     expectedDBCalls.forEach(i => {
       const operation = expectedDBCalls[i].operation;
       delete expectedDBCalls[i].operation;
-      const expected = expectedDBCalls[i];
-      expect(db[operation].mock.calls[0][0]).toEqual(expected);
+      expect(db[operation].mock.calls[0][0]).toEqual(expectedDBCalls[i]);
     });
   }
 );
