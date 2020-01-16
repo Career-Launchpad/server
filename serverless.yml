@@ -42,3 +42,10 @@ functions:
           path: graphql
           method: post
           cors: true
+  verify-domain:
+    handler: dist/auth.auth
+    events:
+      - http:
+          path: verify
+          method: post
+          cors: true
