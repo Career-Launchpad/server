@@ -2,9 +2,13 @@ service: careerdebut-lambdas
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
+custom:
+  defaultStage: dev
+  currentStage: ${opt:stage, self:custom.defaultStage}
 provider:
   name: aws
   runtime: nodejs10.x
+  stage: ${self:custom.currentStage}
   environment:
     DYNAMODB_TABLE1: Student
   iamRoleStatements:
