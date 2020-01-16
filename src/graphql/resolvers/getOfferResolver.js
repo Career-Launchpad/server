@@ -6,10 +6,7 @@ const GetOfferResolver = async (db, args) => {
     }
   };
   let offer = await db.get(params).promise();
-  if (!offer.Item) {
-    return {};
-  }
-  return offer.Item;
+  return offer.Item || {};
 };
 
 export default GetOfferResolver;

@@ -4,10 +4,7 @@ const GetStudentsResolver = async (db, args) => {
     TableName: "Student"
   };
   let students = await db.scan(params).promise();
-  if (!students.Items) {
-    return [];
-  }
-  return students.Items;
+  return students.Items || [];
 };
 
 export default GetStudentsResolver;
