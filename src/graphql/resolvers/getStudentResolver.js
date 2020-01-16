@@ -5,13 +5,8 @@ const GetStudentResolver = async (db, args) => {
       id: args.id
     }
   };
-  return await db.get(params, (err, res) => {
-    if (err) {
-      return err;
-    }
-    if (!res.Item) return { id: args.id };
-    return res.item;
-  });
+  let student = await db.get(params).promise();
+  return student.Item || {};
 };
 
 export default GetStudentResolver;

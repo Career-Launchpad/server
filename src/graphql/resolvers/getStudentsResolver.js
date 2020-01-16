@@ -3,12 +3,8 @@ const GetStudentsResolver = async (db, args) => {
   const params = {
     TableName: "Student"
   };
-  let students = await db.scan(params, callback).promise();
-  if (!students.Items) {
-    return { id: args.id };
-  } else {
-    return students.Items;
-  }
+  let students = await db.scan(params).promise();
+  return students.Items || [];
 };
 
 export default GetStudentsResolver;

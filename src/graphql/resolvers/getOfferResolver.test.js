@@ -1,65 +1,69 @@
+import GetOfferResolver from "./getOfferResolver";
+
 describe("Resolvers", () => {
   it("GetOfferResolver", async () => {
-    // const testcases = [
-    //   {
-    //     desc: "should return student object with the given args and a uuid",
-    //     db: {
-    //       put: jest.fn().mockReturnValue({ promise: () => {} })
-    //     },
-    //     args: {
-    //       id: ""
-    //     },
-    //     expectedDBCall: {
-    //       TableName: "Student",
-    //       Item: {
-    //         firstname: "Braden",
-    //         lastname: "Watkins",
-    //         id: uuidv4()
-    //       }
-    //     },
-    //     expectedRetValue: {
-    //       firstname: "Braden",
-    //       lastname: "Watkins",
-    //       id: uuidv4()
-    //     }
-    //   }
-    // ];
+    const testcases = [
+      {
+        desc: "should return offer object with the given args and a uuid",
+        db: {
+          get: jest.fn().mockReturnValue({
+            promise: () => {
+              return {
+                Item: {
+                  offer_id: "54321",
+                  position_type: "Full-Time",
+                  position_title: "Janitor"
+                }
+              };
+            }
+          })
+        },
+        args: {
+          id: "54321"
+        },
+        expectedDBCall: {
+          TableName: "Offer",
+          Key: {
+            offer_id: "54321"
+          }
+        },
+        expectedRetValue: {
+          offer_id: "54321",
+          position_type: "Full-Time",
+          position_title: "Janitor"
+        }
+      },
+      {
+        desc: "shouldn't return an offer",
+        db: {
+          get: jest.fn().mockReturnValue({
+            promise: () => {
+              return {
+                Item: null
+              };
+            }
+          })
+        },
+        args: {
+          id: "1423"
+        },
+        expectedDBCall: {
+          TableName: "Offer",
+          Key: {
+            offer_id: "1423"
+          }
+        },
+        expectedRetValue: {}
+      }
+    ];
+
+    testcases.forEach(
+      async ({ db, args, expectedDBCall, expectedRetValue }, i) => {
+        await expect(GetOfferResolver(db, args)).resolves.toEqual(
+          expectedRetValue
+        );
+        expect(db.get.mock.calls[0][0]).toEqual(expectedDBCall);
+      }
+    );
   });
 });
-
-// const testcases = [
-//   {
-//     desc: "should return student object with the given args and a uuid",
-//     db: {
-//       put: jest.fn().mockReturnValue({ promise: () => {} })
-//     },
-//     args: {
-//       student: {
-//         firstname: "Braden",
-//         lastname: "Watkins"
-//       }
-//     },
-//     expectedDBCall: {
-//       TableName: "Student",
-//       Item: {
-//         firstname: "Braden",
-//         lastname: "Watkins",
-//         id: uuidv4()
-//       }
-//     },
-//     expectedRetValue: {
-//       firstname: "Braden",
-//       lastname: "Watkins",
-//       id: uuidv4()
-//     }
-//   }
-// ];
-
-// testcases.forEach(
-//   async ({ db, args, expectedDBCall, expectedRetValue }, i) => {
-//     await expect(PostStudentResolver(db, args)).resolves.toEqual(
-//       expectedRetValue
-//     );
-//     expect(db.put.mock.calls[i][0]).toEqual(expectedDBCall);
-//   }
-// );

@@ -1,16 +1,12 @@
-const GetOfferResolver = (db, args) => {
+const GetOfferResolver = async (db, args) => {
   const params = {
     TableName: "Offer",
     Key: {
-      id: args.id
+      offer_id: args.id
     }
   };
-  return promisify(callback => {
-    db.get(params, callback);
-  }).then(result => {
-    if (!result.Item) return { id: args.id };
-    return result.Item;
-  });
+  let offer = await db.get(params).promise();
+  return offer.Item || {};
 };
 
 export default GetOfferResolver;
