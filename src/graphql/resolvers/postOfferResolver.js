@@ -1,24 +1,18 @@
 import uuidv4 from "uuid/v4";
+import removeEmptyStrings from "../utils/removeEmptyStrings";
 
-const PostOfferResolver = async (db, args) => {
-  const offer = args.offer;
-
-  const location = offer.location;
-  delete offer.location;
-  const bonuses = offer.bonuses;
-  delete offer.bonuses;
-
-  const location_id = `${location.city}${location.state}${location.country}`.replace(
-    /\s/g,
-    ""
-  );
-
-  const locationParams = {
-    TableName: "Location",
-    Item: { location_id, ...location }
+const putCompany = async (db, company_name) => {
+  const id = uuidv4();
+  const name = company_name;
+  let addCompanyParams = {
+    TableName: "Company",
+    Item: { id, name }
   };
+  await db.put(addCompanyParams).promise();
+  return { id, name };
+};
 
-  await db.put(locationParams).promise();
+const queryCompany = async (db, company_name) => {
   const companyParams = {
     TableName: "Company",
     IndexName: "name-index",
@@ -27,53 +21,75 @@ const PostOfferResolver = async (db, args) => {
       "#nm": "name"
     },
     ExpressionAttributeValues: {
-      ":name": offer.company_name
+      ":name": company_name
     }
   };
-  let companyName = null;
-  let company = await db.query(companyParams).promise();
-  let uuid;
-  if (company.Items.length === 0) {
-    uuid = uuidv4();
-    let addCompanyParams = {
-      TableName: "Company",
-      Item: { id: uuid, name: offer.company_name }
-    };
-    company = await db.put(addCompanyParams).promise();
-    companyName = company.Items[0].name;
-  } else {
-    uuid = company.Items[0].id;
-    companyName = company.Items[0].name;
+  const { Items } = await db.query(companyParams).promise();
+  if (Items.length === 0) {
+    return await putCompany(db, company_name);
   }
+  return {
+    id: Items[0].id,
+    name: Items[0].name
+  };
+};
 
+const putLocation = async (db, location) => {
+  const { city, state, country } = location;
+  const location_id = `${city}${state}${country}`.replace(/\s/g, "");
+  const locationParams = {
+    TableName: "Location",
+    Item: { location_id, ...location }
+  };
+
+  await db.put(locationParams).promise();
+
+  return location_id;
+};
+
+const putBonuses = async (db, bonuses, company_id) => {
   if (bonuses) {
     for await (let bonus of bonuses) {
       const postBonusParams = {
         TableName: "Bonus",
         Item: {
-          id: uuid,
-          ...bonus
+          id: company_id,
+          ...removeEmptyStrings(bonus)
         }
       };
       await db.put(postBonusParams).promise();
     }
   }
+};
 
-  let uploadable = {
-    ...args.offer,
-    company_name: companyName,
-    timestamp: new Date().getTime(),
-    offer_id: uuidv4(),
-    location_id
-  };
+const PostOfferResolver = async (db, args) => {
+  try {
+    const company = await queryCompany(db, args.offer.company_name);
+    const location_id = await putLocation(db, args.offer.location);
+    await putBonuses(db, args.offer.bonuses, company.id);
 
-  const postOfferParams = {
-    TableName: "Offer",
-    Item: uploadable
-  };
+    let uploadable = {
+      ...args.offer,
+      location_id,
+      offer_id: uuidv4(),
+      company_name: company.name,
+      timestamp: new Date().getTime()
+    };
 
-  await db.put(postOfferParams).promise();
-  return uploadable;
+    const postOfferParams = {
+      TableName: "Offer",
+      Item: uploadable
+    };
+
+    await db.put(postOfferParams).promise();
+    return {
+      ...uploadable,
+      id: uploadable.offer_id
+    };
+  } catch (err) {
+    console.error(err);
+    return {};
+  }
 };
 
 export default PostOfferResolver;
