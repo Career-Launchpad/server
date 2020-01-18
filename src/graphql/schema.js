@@ -63,7 +63,7 @@ let Schema = db => {
         id: globalIdField("store"),
         store: {
           type: QueryType,
-          resolve: () => Query
+          resolve: () => QueryType
         }
       })
     }),

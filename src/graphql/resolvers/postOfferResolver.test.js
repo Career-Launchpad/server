@@ -1,6 +1,10 @@
 import PostOfferResolver from "./postOfferResolver";
 
 describe("Resolvers", () => {
+  beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
+  });
+
   it("PostOfferResolver", async () => {
     const testValues = [
       {
@@ -96,15 +100,27 @@ describe("Resolvers", () => {
           offer_id: 123456789,
           location_id: testValues[0].location_id
         }
+      },
+      {
+        desc: "should catch an error thrown",
+        db: {
+          query: jest.fn().mockImplementation(() => {
+            throw new Error("I broke");
+          })
+        },
+        args: {
+          offer: {
+            ...testValues[0].offer
+          }
+        },
+        expectedRetValue: {}
       }
     ];
 
-    testcases.forEach(
-      async ({ db, args, expectedDBCalls, expectedRetValue }, i) => {
-        await expect(PostOfferResolver(db, args)).resolves.toEqual(
-          expect.objectContaining(expectedRetValue)
-        );
-      }
-    );
+    testcases.forEach(async ({ db, args, expectedRetValue }, i) => {
+      await expect(PostOfferResolver(db, args)).resolves.toEqual(
+        expect.objectContaining(expectedRetValue)
+      );
+    });
   });
 });
