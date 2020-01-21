@@ -12,7 +12,7 @@ import {
   OfferType,
   CreateStudentInput,
   CreateOfferInput
-} from "./types/types";
+} from "./types";
 
 import {
   GetStudentResolver,
