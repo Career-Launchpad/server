@@ -46,6 +46,7 @@ const CreateOfferInput = new GraphQLInputObjectType({
     student_id: { type: GraphQLString },
     position_type: { type: GraphQLString }, // full-time, part-time, internship, contractor
     position_title: { type: GraphQLString },
+    benefits_description: { type: GraphQLString },
     accepted: { type: GraphQLBoolean },
     extended: { type: GraphQLString },
     deadline: { type: GraphQLString },
