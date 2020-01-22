@@ -84,7 +84,7 @@ const PostOfferResolver = async (db, args) => {
     await db.put(postOfferParams).promise();
     return {
       ...uploadable,
-      id: uploadable.offer_id
+      offer_id: uploadable.offer_id
     };
   } catch (err) {
     console.error(err);
