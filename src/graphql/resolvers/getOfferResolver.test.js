@@ -19,7 +19,7 @@ describe("Resolvers", () => {
           })
         },
         args: {
-          id: "54321"
+          offer_id: "54321"
         },
         expectedDBCall: {
           TableName: "Offer",
@@ -45,7 +45,7 @@ describe("Resolvers", () => {
           })
         },
         args: {
-          id: "1423"
+          offer_id: "1423"
         },
         expectedDBCall: {
           TableName: "Offer",
