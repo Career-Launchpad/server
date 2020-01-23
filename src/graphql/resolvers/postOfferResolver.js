@@ -68,6 +68,9 @@ const PostOfferResolver = async (db, args) => {
     const location_id = await putLocation(db, args.offer.location);
     await putBonuses(db, args.offer.bonuses, company.id);
 
+    delete args.offer.bonuses;
+    delete args.offer.location;
+
     let uploadable = {
       ...args.offer,
       location_id,
