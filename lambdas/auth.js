@@ -7,10 +7,11 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 module.exports.auth = async (event, context, callback) => {
   const params = { TableName: "Aliases" };
   let aliasList = await dynamoDb.scan(params).promise();
+  aliasList = aliasList.Items;
 
   response = {
     statusCode: 200,
-    body: JSON.stringify({ aliasList })
+    body: JSON.stringify(aliasList)
   };
 
   callback(null, response);

@@ -50,6 +50,6 @@ functions:
     handler: dist/auth.auth
     events:
       - http:
-          path: verify
+          path: domains
           method: post
           cors: true
