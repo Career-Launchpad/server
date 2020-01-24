@@ -9,7 +9,7 @@ module.exports.auth = async (event, context, callback) => {
   let aliasList = await dynamoDb.scan(params).promise();
 
   response = {
-    statusCode: 401,
+    statusCode: 200,
     body: JSON.stringify({ aliasList })
   };
 
