@@ -2,7 +2,7 @@ const GetOfferResolver = async (db, args) => {
   const params = {
     TableName: "Offer",
     Key: {
-      offer_id: args.offer_id
+      id: args.id
     }
   };
   let offer = await db.get(params).promise();

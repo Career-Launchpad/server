@@ -6,7 +6,7 @@ const GetOffersResolver = async db => {
   let res = [];
 
   for await (let offer of offers.Items) {
-    let offerId = offer.offer_id;
+    let offerId = offer.id;
     let bonusesParams = {
       TableName: "Bonus",
       KeyConditionExpression: "#i = :id",

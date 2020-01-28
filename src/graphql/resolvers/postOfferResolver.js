@@ -74,7 +74,7 @@ const PostOfferResolver = async (db, args) => {
     let uploadable = {
       ...removeEmptyStrings(args.offer),
       location_id,
-      offer_id: uuidv4(),
+      id: uuidv4(),
       company_name: company.name,
       timestamp: new Date().getTime()
     };
@@ -87,7 +87,7 @@ const PostOfferResolver = async (db, args) => {
     await db.put(postOfferParams).promise();
     return {
       ...removeEmptyStrings(uploadable),
-      offer_id: uploadable.offer_id
+      id: uploadable.id
     };
   } catch (err) {
     console.error(err);

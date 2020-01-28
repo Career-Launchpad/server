@@ -4,7 +4,7 @@ describe("Resolvers", () => {
   it("GetOffersResolver", async () => {
     const offers = [
       {
-        offer_id: "1234",
+        id: "1234",
         position_type: "Full-time",
         position_title: "Janitor",
         accepted: true,

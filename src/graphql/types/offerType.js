@@ -11,7 +11,7 @@ import { BonusType, BonusInput } from "./bonusType";
 import { LocationType, LocationInput } from "./locationType";
 
 const offer = {
-  offer_id: { type: GraphQLString },
+  id: { type: GraphQLString },
   position_type: { type: GraphQLString },
   position_title: { type: GraphQLString },
   accepted: { type: GraphQLBoolean },
