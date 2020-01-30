@@ -20,7 +20,8 @@ import {
   GetOfferResolver,
   GetOffersResolver,
   PostOfferResolver,
-  PostStudentResolver
+  PostStudentResolver,
+  GetCompanyNamesResolver
 } from "./resolvers/resolvers";
 
 let Schema = db => {
