@@ -1,7 +1,7 @@
 /*
-* Returns a sorted list of all company_names that have appeared in submitted
-* offers
-*/
+ * Returns a sorted list of all company_names that have appeared in submitted
+ * offers
+ */
 
 const GetCompanyNamesResolver = async db => {
   const params = {
@@ -11,33 +11,33 @@ const GetCompanyNamesResolver = async db => {
   let res = [];
 
   for await (let offer of offers.Items) {
-    [index, hasItem] = findPlaceOf(offer.company_name, res, compareStrings);
+    let place = findPlaceOf(offer.company_name, res, compareStrings);
 
-    if (hasItem) continue;
+    if (place.exists) continue;
 
-    insertAtIndex(offer.company_name, res, index);
+    insertAtIndex(offer.company_name, res, place.index);
   }
   return res;
 };
 
 /*
-* Finds the index where a new item should be inserted in a sorted array to
-* maintain the sort
-*/
+ * Finds the index where a new item should be inserted in a sorted array to
+ * maintain the sort
+ */
 const findPlaceOf = (newStr, sortedStringArray, comparator) => {
-  let index = 0;
+  let i = 0;
   for (var str of sortedStringArray) {
-    let comp = comparator(newStr, str)
+    let comp = comparator(newStr, str);
     if (comp < 0) {
       //newStr should be before string
-      return [index, false];
+      return { index: i, exists: false };
+    } else if (comp === 0) {
+      return { index: i, exists: true };
     }
-    else if (comp === 0) {
-      return [index, true];
-    }
-    index += 1;
+    i += 1;
   }
-}
+  return { index: i, exists: false };
+};
 
 const compareStrings = (a, b) => a.localeCompare(b);
 
