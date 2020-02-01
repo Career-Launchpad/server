@@ -20,7 +20,8 @@ import {
   GetOfferResolver,
   GetOffersResolver,
   PostOfferResolver,
-  PostStudentResolver
+  PostStudentResolver,
+  GetCompanyNamesResolver
 } from "./resolvers/resolvers";
 
 let Schema = db => {
@@ -52,6 +53,10 @@ let Schema = db => {
           gender: { type: GraphQLString }
         },
         resolve: async (_, args) => GetStudentsResolver(db, args)
+      },
+      company_names: {
+        type: GraphQLList(GraphQLString),
+        resolve: async _ => GetCompanyNamesResolver(db)
       }
     })
   });
