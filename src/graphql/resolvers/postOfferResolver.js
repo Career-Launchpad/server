@@ -6,7 +6,7 @@ const putCompany = async (db, company_name) => {
   const id = uuidv4();
   const name = company_name;
   let addCompanyParams = {
-    TableName: TABLES["Company"],
+    TableName: TABLES.Company,
     Item: { id, name }
   };
   await db.put(addCompanyParams).promise();
@@ -15,7 +15,7 @@ const putCompany = async (db, company_name) => {
 
 const queryCompany = async (db, company_name) => {
   const companyParams = {
-    TableName: TABLES["Company"],
+    TableName: TABLES.Company,
     IndexName: "name-index",
     KeyConditionExpression: "#nm = :name",
     ExpressionAttributeNames: {
@@ -39,7 +39,7 @@ const putLocation = async (db, location) => {
   const { city, state, country } = location;
   const location_id = `${city}${state}${country}`.replace(/\s/g, "");
   const locationParams = {
-    TableName: TABLES["Location"],
+    TableName: TABLES.Location,
     Item: { location_id, ...location }
   };
 
@@ -52,7 +52,7 @@ const putBonuses = async (db, bonuses, company_id) => {
   if (bonuses) {
     for await (let bonus of bonuses) {
       const postBonusParams = {
-        TableName: TABLES["Bonus"],
+        TableName: TABLES.Bonus,
         Item: {
           id: company_id,
           ...removeEmptyStrings(bonus)
@@ -81,7 +81,7 @@ const PostOfferResolver = async (db, args) => {
     };
 
     const postOfferParams = {
-      TableName: TABLES["Offer"],
+      TableName: TABLES.Offer,
       Item: uploadable
     };
 

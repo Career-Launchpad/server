@@ -2,7 +2,7 @@ import { TABLES } from "../environment";
 
 const GetOfferResolver = async (db, args) => {
   const params = {
-    TableName: TABLES["Offer"],
+    TableName: TABLES.Offer,
     Key: {
       offer_id: args.offer_id
     }

@@ -7,7 +7,7 @@ import { TABLES } from "../environment";
 
 const GetCompanyNamesResolver = async db => {
   const params = {
-    TableName: TABLES["Offer"]
+    TableName: TABLES.Offer
   };
   let offers = await db.scan(params).promise();
   let res = [];

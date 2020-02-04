@@ -2,7 +2,7 @@ import { TABLES } from "../environment";
 
 const GetOffersResolver = async db => {
   const params = {
-    TableName: TABLES["Offer"]
+    TableName: TABLES.Offer
   };
   let offers = await db.scan(params).promise();
   let res = [];
@@ -10,7 +10,7 @@ const GetOffersResolver = async db => {
   for await (let offer of offers.Items) {
     let offerId = offer.offer_id;
     let bonusesParams = {
-      TableName: TABLES["Bonus"],
+      TableName: TABLES.Bonus,
       KeyConditionExpression: "#i = :id",
       ExpressionAttributeNames: {
         "#i": "id"
