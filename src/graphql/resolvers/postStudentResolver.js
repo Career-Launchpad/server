@@ -1,4 +1,5 @@
 import uuidv4 from "uuid/v4";
+import { TABLES } from "../environment";
 
 const PostStudentResolver = async (db, args) => {
   let uploadable = {
@@ -6,7 +7,7 @@ const PostStudentResolver = async (db, args) => {
     id: uuidv4()
   };
   const params = {
-    TableName: "Student",
+    TableName: TABLES["Student"],
     Item: uploadable
   };
   await db.put(params).promise();

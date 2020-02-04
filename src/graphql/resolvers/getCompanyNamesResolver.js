@@ -1,3 +1,5 @@
+import { TABLES } from "../environment";
+
 /*
  * Returns a sorted list of all company_names that have appeared in submitted
  * offers
@@ -5,7 +7,7 @@
 
 const GetCompanyNamesResolver = async db => {
   const params = {
-    TableName: "Offer"
+    TableName: TABLES["Offer"]
   };
   let offers = await db.scan(params).promise();
   let res = [];
