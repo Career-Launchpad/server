@@ -2,12 +2,7 @@ const path = require("path");
 const fs = require("fs");
 
 module.exports = {
-  mode: "production",
   target: "node",
-  // output: {
-  //   path: path.resolve(__dirname, "dist"),
-  //   filename: "lambda.js",
-  // },
   entry: fs
     .readdirSync(path.join(__dirname, "./lambdas"))
     .filter(filename => /\.js$/.test(filename))
