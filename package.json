@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "deploy": "NODE_ENV=production webpack && sls deploy --stage prod",
-    "deploydev": "webpack && sls deploy",
+    "deploydev": "NODE_ENV=development webpack && sls deploy",
     "graphql": "nodemon src/graphql/index.js --exec babel-node",
     "graphql-lambda": "webpack && ./node_modules/.bin/sls invoke local -f graphql --data {}"
   },
