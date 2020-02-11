@@ -2,7 +2,7 @@ import { TABLES } from "../environment";
 
 const GetStudentResolver = async (db, args) => {
   const params = {
-    TableName: TABLES["Student"],
+    TableName: TABLES.Student,
     Key: {
       id: args.id
     }

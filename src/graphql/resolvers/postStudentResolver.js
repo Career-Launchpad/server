@@ -7,7 +7,7 @@ const PostStudentResolver = async (db, args) => {
     id: uuidv4()
   };
   const params = {
-    TableName: TABLES["Student"],
+    TableName: TABLES.Student,
     Item: uploadable
   };
   await db.put(params).promise();
