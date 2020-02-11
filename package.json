@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "deploy": "NODE_ENV=production webpack && sls deploy --stage prod",
-    "deploydev": "NODE_ENV=development webpack && sls deploy",
+    "deploy": "API_ENV=production webpack && sls deploy --stage prod",
+    "deploydev": "API_ENV=development webpack && sls deploy",
     "graphql": "nodemon src/graphql/index.js --exec babel-node",
     "graphql-lambda": "webpack && ./node_modules/.bin/sls invoke local -f graphql --data {}"
   },

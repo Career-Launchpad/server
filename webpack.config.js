@@ -24,7 +24,7 @@ module.exports = {
     libraryTarget: "commonjs2",
     filename: "[name].js"
   },
-  plugins: [new webpack.EnvironmentPlugin(["NODE_ENV"])],
+  plugins: [new webpack.EnvironmentPlugin(["API_ENV"])],
   module: {
     rules: [
       {

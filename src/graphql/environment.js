@@ -15,6 +15,6 @@ const tables = {
   }
 };
 
-const env = process.env.NODE_ENV || "development";
+const env = process.env.API_ENV || "development";
 
 export const TABLES = tables[env];
