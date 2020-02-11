@@ -1,7 +1,9 @@
+const webpack = require("webpack");
 const path = require("path");
 const fs = require("fs");
 
 module.exports = {
+  mode: "production",
   target: "node",
   entry: fs
     .readdirSync(path.join(__dirname, "./lambdas"))
@@ -22,6 +24,7 @@ module.exports = {
     libraryTarget: "commonjs2",
     filename: "[name].js"
   },
+  plugins: [new webpack.EnvironmentPlugin(["NODE_ENV"])],
   module: {
     rules: [
       {
