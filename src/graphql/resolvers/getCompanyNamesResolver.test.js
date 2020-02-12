@@ -1,4 +1,5 @@
 import GetCompanyNamesResolver from "./getCompanyNamesResolver";
+import { TABLES } from "../environment";
 
 const offers = [
   {
@@ -46,7 +47,7 @@ const testcases = [
       })
     },
     expectedDBCalls: {
-      scan: { TableName: "Offer" }
+      scan: { TableName: TABLES.Offer }
     },
     expectedRetValue: [
       "Brevium",
