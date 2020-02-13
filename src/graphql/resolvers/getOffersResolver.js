@@ -1,9 +1,23 @@
 import { TABLES } from "../environment";
+import filterHelper from "../utils/filterHelper";
 
-const GetOffersResolver = async db => {
-  const params = {
-    TableName: TABLES.Offer
-  };
+const GetOffersResolver = async (db, args) => {
+  var configHelper;
+  var params;
+  if (args.filter != null) {
+    configHelper = filterHelper(args.filter);
+    console.log("FILTER-HELPER: ");
+    console.log(configHelper);
+    params = {
+      TableName: TABLES.Offer,
+      ExpressionAttributeValues: configHelper.ExpressionAttributeValues,
+      KeyConditionExpression: configHelper.KeyConditionExpression
+    };
+  } else {
+    params = {
+      TableName: TABLES.Offer
+    };
+  }
   let offers = await db.scan(params).promise();
   let res = [];
 

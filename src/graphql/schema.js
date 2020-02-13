@@ -29,6 +29,15 @@ let Schema = db => {
     name: "store",
     fields: () => ({
       id: globalIdField("query"),
+      // filter:
+      // {
+      //   type: GraphQLObjectType,
+      //   args: {
+      //     field: { type: GraphQLString },
+      //     value: { type: GraphQLString },
+      //     comp: { type: GraphQLString },
+      //   }
+      // },
       student: {
         type: StudentType,
         args: {
