@@ -23,7 +23,8 @@ import {
   PostOfferResolver,
   PostStudentResolver,
   GetCompanyNamesResolver,
-  GetCompaniesResolver
+  GetCompaniesResolver,
+  GetMajorsResolver
 } from "./resolvers/resolvers";
 
 let Schema = db => {
@@ -63,6 +64,10 @@ let Schema = db => {
       companies: {
         type: GraphQLList(CompanyType),
         resolve: async (_, args) => GetCompaniesResolver(db, args)
+      },
+      majors: {
+        type: GraphQLList(GraphQLString),
+        resolve: async (_, args) => GetMajorsResolver(db, args)
       }
     })
   });
