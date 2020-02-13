@@ -8,10 +8,11 @@ import {
 import { OfferType } from "./offerType";
 
 const student = {
+  id: { type: GraphQLString },
   email: { type: GraphQLString },
   firstname: { type: GraphQLString },
   lastname: { type: GraphQLString },
-  college_id: { type: GraphQLString },
+  college_name: { type: GraphQLString },
   academic_year: { type: GraphQLString },
   major: { type: GraphQLString },
   gender: { type: GraphQLString },
@@ -22,17 +23,8 @@ const student = {
 const StudentType = new GraphQLObjectType({
   name: "student",
   fields: () => ({
-    id: { type: GraphQLString },
-    email: { type: GraphQLString },
-    firstname: { type: GraphQLString },
-    lastname: { type: GraphQLString },
-    college_name: { type: GraphQLString },
-    academic_year: { type: GraphQLString },
-    major: { type: GraphQLString },
-    gender: { type: GraphQLString },
-    last_authentication: { type: GraphQLString },
+    ...student,
     security_level: { type: GraphQLString },
-    ethnicity: { type: GraphQLString },
     offers: {
       type: GraphQLList(OfferType),
       args: { student_id: { type: GraphQLString } },
