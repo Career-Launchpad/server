@@ -16,7 +16,7 @@ describe("Resolvers", () => {
           }
         },
         expectedDBCall: {
-          TableName: "Student",
+          TableName: "StudentDev",
           Item: {
             firstname: "Braden",
             lastname: "Watkins",
