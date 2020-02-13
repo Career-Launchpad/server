@@ -1,4 +1,3 @@
-import uuidv4 from "uuid/v4";
 import PostStudentResolver from "./postStudentResolver";
 
 describe("Resolvers", () => {
@@ -11,6 +10,7 @@ describe("Resolvers", () => {
         },
         args: {
           student: {
+            id: "thisisauniqueid",
             firstname: "Braden",
             lastname: "Watkins"
           }
@@ -18,15 +18,15 @@ describe("Resolvers", () => {
         expectedDBCall: {
           TableName: "Student",
           Item: {
+            id: "thisisauniqueid",
             firstname: "Braden",
-            lastname: "Watkins",
-            id: uuidv4()
+            lastname: "Watkins"
           }
         },
         expectedRetValue: {
+          id: "thisisauniqueid",
           firstname: "Braden",
-          lastname: "Watkins",
-          id: uuidv4()
+          lastname: "Watkins"
         }
       }
     ];
