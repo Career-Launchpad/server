@@ -22,7 +22,7 @@ describe("Resolvers", () => {
           offer_id: "54321"
         },
         expectedDBCall: {
-          TableName: "Offer",
+          TableName: "OfferDev",
           Key: {
             offer_id: "54321"
           }
@@ -48,7 +48,7 @@ describe("Resolvers", () => {
           offer_id: "1423"
         },
         expectedDBCall: {
-          TableName: "Offer",
+          TableName: "OfferDev",
           Key: {
             offer_id: "1423"
           }

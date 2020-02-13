@@ -52,9 +52,9 @@ describe("Resolvers", () => {
           })
         },
         expectedDBCalls: {
-          scan: { TableName: "Offer" },
+          scan: { TableName: "OfferDev" },
           query: {
-            TableName: "Bonus",
+            TableName: "BonusDev",
             KeyConditionExpression: "#i = :id",
             ExpressionAttributeNames: { "#i": "id" },
             ExpressionAttributeValues: {
