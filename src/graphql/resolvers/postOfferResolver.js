@@ -76,7 +76,7 @@ const PostOfferResolver = async (db, args) => {
       ...removeEmptyStrings(args.offer),
       location_id,
       offer_id: uuidv4(),
-      company_name: company.name,
+      company_id: company.id,
       timestamp: new Date().getTime()
     };
 

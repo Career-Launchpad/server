@@ -26,7 +26,7 @@ describe("Resolvers", () => {
           })
         },
         expectedDBCall: {
-          TableName: "Student"
+          TableName: "StudentDev"
         },
         expectedRetValue: students
       },
@@ -42,7 +42,7 @@ describe("Resolvers", () => {
           })
         },
         expectedDBCall: {
-          TableName: "Student"
+          TableName: "StudentDev"
         },
         expectedRetValue: []
       }

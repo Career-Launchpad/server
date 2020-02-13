@@ -2,8 +2,8 @@ name: Pull Request Node CI
 
 on:
   push:
-    branches:
-      - !master
+    branches-ignore:
+      - master
 
 jobs:
   build:
