@@ -5,3 +5,4 @@ export { default as GetStudentsResolver } from "./getStudentsResolver";
 export { default as PostOfferResolver } from "./postOfferResolver";
 export { default as PostStudentResolver } from "./postStudentResolver";
 export { default as GetCompanyNamesResolver } from "./getCompanyNamesResolver";
+export { default as GetCompaniesResolver } from "./getCompaniesResolver";
