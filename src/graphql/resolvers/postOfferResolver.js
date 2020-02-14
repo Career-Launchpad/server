@@ -88,7 +88,7 @@ const PostOfferResolver = async (db, args) => {
     await db.put(postOfferParams).promise();
     return {
       ...removeEmptyStrings(uploadable),
-      offer_id: uploadable.offer_id
+      id: uploadable.id
     };
   } catch (err) {
     console.error(err);
