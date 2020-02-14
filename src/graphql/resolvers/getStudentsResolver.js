@@ -1,7 +1,9 @@
+import { TABLES } from "../environment";
+
 // TODO: Finish GetStudentsResolver
 const GetStudentsResolver = async (db, args) => {
   const params = {
-    TableName: "Student"
+    TableName: TABLES.Student
   };
   let students = await db.scan(params).promise();
   return students.Items || [];

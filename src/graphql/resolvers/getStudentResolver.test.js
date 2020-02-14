@@ -27,7 +27,7 @@ describe("Resolvers", () => {
           id: "132"
         },
         expectedDBCall: {
-          TableName: "Student",
+          TableName: "StudentDev",
           Key: {
             id: "132"
           }
@@ -58,7 +58,7 @@ describe("Resolvers", () => {
           id: "12"
         },
         expectedDBCall: {
-          TableName: "Student",
+          TableName: "StudentDev",
           Key: {
             id: "12"
           }

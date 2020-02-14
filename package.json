@@ -6,10 +6,10 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "deploy": "webpack --mode=production && sls deploy --stage prod",
-    "deploydev": "webpack --mode=production && sls deploy",
+    "deploy": "API_ENV=production webpack && sls deploy --stage prod",
+    "deploydev": "API_ENV=development webpack && sls deploy",
     "graphql": "nodemon src/graphql/index.js --exec babel-node",
-    "graphql-lambda": "webpack --mode=production && ./node_modules/.bin/sls invoke local -f graphql --data {}"
+    "graphql-lambda": "webpack && ./node_modules/.bin/sls invoke local -f graphql --data {}"
   },
   "jest": {
     "collectCoverage": true,

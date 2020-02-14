@@ -1,11 +1,12 @@
 import uuidv4 from "uuid/v4";
 import removeEmptyStrings from "../utils/removeEmptyStrings";
+import { TABLES } from "../environment";
 
 const putCompany = async (db, company_name) => {
   const id = uuidv4();
   const name = company_name;
   let addCompanyParams = {
-    TableName: "Company",
+    TableName: TABLES.Company,
     Item: { id, name }
   };
   await db.put(addCompanyParams).promise();
@@ -14,7 +15,7 @@ const putCompany = async (db, company_name) => {
 
 const queryCompany = async (db, company_name) => {
   const companyParams = {
-    TableName: "Company",
+    TableName: TABLES.Company,
     IndexName: "name-index",
     KeyConditionExpression: "#nm = :name",
     ExpressionAttributeNames: {
@@ -38,7 +39,7 @@ const putLocation = async (db, location) => {
   const { city, state, country } = location;
   const location_id = `${city}${state}${country}`.replace(/\s/g, "");
   const locationParams = {
-    TableName: "Location",
+    TableName: TABLES.Location,
     Item: { location_id, ...location }
   };
 
@@ -51,7 +52,7 @@ const putBonuses = async (db, bonuses, company_id) => {
   if (bonuses) {
     for await (let bonus of bonuses) {
       const postBonusParams = {
-        TableName: "Bonus",
+        TableName: TABLES.Bonus,
         Item: {
           id: company_id,
           ...removeEmptyStrings(bonus)
@@ -74,13 +75,13 @@ const PostOfferResolver = async (db, args) => {
     let uploadable = {
       ...removeEmptyStrings(args.offer),
       location_id,
-      id: uuidv4(),
-      company_name: company.name,
+      offer_id: uuidv4(),
+      company_id: company.id,
       timestamp: new Date().getTime()
     };
 
     const postOfferParams = {
-      TableName: "Offer",
+      TableName: TABLES.Offer,
       Item: uploadable
     };
 
