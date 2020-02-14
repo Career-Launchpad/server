@@ -11,7 +11,8 @@ import {
   OfferConnection,
   OfferType,
   CreateStudentInput,
-  CreateOfferInput
+  CreateOfferInput,
+  CompanyType
 } from "./types";
 
 import {
@@ -21,7 +22,10 @@ import {
   GetOffersResolver,
   PostOfferResolver,
   PostStudentResolver,
-  GetCompanyNamesResolver
+  GetCompanyNamesResolver,
+  GetCompaniesResolver,
+  GetCompanyResolver,
+  GetMajorsResolver
 } from "./resolvers/resolvers";
 
 let Schema = db => {
@@ -57,6 +61,21 @@ let Schema = db => {
       company_names: {
         type: GraphQLList(GraphQLString),
         resolve: async _ => GetCompanyNamesResolver(db)
+      },
+      companies: {
+        type: GraphQLList(CompanyType),
+        resolve: async (_, args) => GetCompaniesResolver(db, args)
+      },
+      company: {
+        type: CompanyType,
+        args: {
+          id: { type: GraphQLString }
+        },
+        resolve: async (_, args) => GetCompanyResolver(db, args)
+      },
+      majors: {
+        type: GraphQLList(GraphQLString),
+        resolve: async (_, args) => GetMajorsResolver(db, args)
       }
     })
   });

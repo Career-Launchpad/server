@@ -14,6 +14,7 @@ describe("Resolvers", () => {
           accepted: true,
           academic_year: "Senior",
           company_name: "test",
+          company_id: "coolcompanyid",
           flag: false,
           student_id: "mylord",
           wage_value: 1
@@ -39,16 +40,33 @@ describe("Resolvers", () => {
         desc:
           "should post an offer and the new company object with the given args",
         db: {
+          query: jest.fn().mockReturnValue({
+            promise: () => {
+              return {};
+            }
+          }),
           put: jest.fn().mockReturnValue({
             promise: () => {
-              return { Items: [{ name: "test" }] };
+              return {
+                Items: [
+                  {
+                    name: "test",
+                    id: "coolcompanyid"
+                  }
+                ]
+              };
             }
           }),
           // query location
           query: jest.fn().mockReturnValue({
             promise: () => {
               return {
-                Items: []
+                Items: [
+                  {
+                    name: "test",
+                    id: "coolcompanyid"
+                  }
+                ]
               };
             }
           })

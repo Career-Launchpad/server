@@ -1,14 +1,8 @@
+import { GetSingle } from "./resolverHelper";
 import { TABLES } from "../environment";
 
 const GetOfferResolver = async (db, args) => {
-  const params = {
-    TableName: TABLES.Offer,
-    Key: {
-      id: args.id
-    }
-  };
-  let offer = await db.get(params).promise();
-  return offer.Item || {};
+  return await GetSingle(db, TABLES.Offer, args.id);
 };
 
 export default GetOfferResolver;

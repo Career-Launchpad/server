@@ -75,7 +75,7 @@ const PostOfferResolver = async (db, args) => {
     let uploadable = {
       ...removeEmptyStrings(args.offer),
       location_id,
-      offer_id: uuidv4(),
+      id: uuidv4(),
       company_id: company.id,
       timestamp: new Date().getTime()
     };
