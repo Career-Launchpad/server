@@ -1,5 +1,6 @@
 import { TABLES } from "../environment";
 import { GetMany } from "./resolverHelper";
+import removeEmptyStrings from "../utils/removeEmptyStrings";
 
 // Gets all offers
 const GetOffersResolver = async db => {
@@ -8,7 +9,7 @@ const GetOffersResolver = async db => {
 
   for await (let offer of offers) {
     let offerId = offer.id;
-    let bonusesParams = {
+    let bonusesParams = removeEmptyStrings({
       TableName: TABLES.Bonus,
       KeyConditionExpression: "#i = :id",
       ExpressionAttributeNames: {
@@ -17,7 +18,8 @@ const GetOffersResolver = async db => {
       ExpressionAttributeValues: {
         ":id": offerId
       }
-    };
+    });
+    console.log(bonusesParams);
     let bonuses = await db.query(bonusesParams).promise();
     res.push({ ...offer, bonuses: bonuses.Items });
   }
