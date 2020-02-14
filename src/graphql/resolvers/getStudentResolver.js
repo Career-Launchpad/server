@@ -1,14 +1,8 @@
 import { TABLES } from "../environment";
+import { GetSingle } from "./resolverHelper";
 
 const GetStudentResolver = async (db, args) => {
-  const params = {
-    TableName: TABLES.Student,
-    Key: {
-      id: args.id
-    }
-  };
-  let student = await db.get(params).promise();
-  return student.Item || {};
+  return await GetSingle(db, TABLES.Student, args.id);
 };
 
 export default GetStudentResolver;
