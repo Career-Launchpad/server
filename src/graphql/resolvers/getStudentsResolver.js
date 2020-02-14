@@ -1,12 +1,9 @@
 import { TABLES } from "../environment";
+import { GetMany } from "./resolverHelper";
 
-// TODO: Finish GetStudentsResolver
+// Gets all students
 const GetStudentsResolver = async (db, args) => {
-  const params = {
-    TableName: TABLES.Student
-  };
-  let students = await db.scan(params).promise();
-  return students.Items || [];
+  return await GetMany(db, TABLES.Student);
 };
 
 export default GetStudentsResolver;

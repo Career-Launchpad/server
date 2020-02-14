@@ -1,14 +1,13 @@
 import { TABLES } from "../environment";
+import { GetMany } from "./resolverHelper";
 import removeEmptyStrings from "../utils/removeEmptyStrings";
 
+// Gets all offers
 const GetOffersResolver = async db => {
-  const params = {
-    TableName: TABLES.Offer
-  };
-  let offers = await db.scan(params).promise();
+  let offers = await GetMany(db, TABLES.Offer);
   let res = [];
 
-  for await (let offer of offers.Items) {
+  for await (let offer of offers) {
     let offerId = offer.id;
     let bonusesParams = removeEmptyStrings({
       TableName: TABLES.Bonus,

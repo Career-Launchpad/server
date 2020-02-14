@@ -1,15 +1,11 @@
 import { TABLES } from "../environment";
+import { GetMany } from "./resolverHelper";
 
 /*
  * Returns a list of companies
  */
-
 const GetCompaniesResolver = async (db, args) => {
-  const params = {
-    TableName: TABLES.Company
-  };
-  let companies = await db.scan(params).promise();
-  return companies.Items || [];
+  return await GetMany(db, TABLES.Company);
 };
 
 export default GetCompaniesResolver;
