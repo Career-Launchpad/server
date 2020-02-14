@@ -9,6 +9,7 @@ import {
 
 import { BonusType, BonusInput } from "./bonusType";
 import { LocationType, LocationInput } from "./locationType";
+import { CompanyType } from "./companyType";
 
 const offer = {
   id: { type: GraphQLString },
@@ -19,8 +20,7 @@ const offer = {
   extended: { type: GraphQLString },
   deadline: { type: GraphQLString },
   academic_year: { type: GraphQLString },
-  // company_name: { type: GraphQLString },
-  company_id: { type: GraphQLString },
+  company: { type: CompanyType },
   flag: { type: GraphQLBoolean },
   student_id: { type: GraphQLString },
   location: { type: LocationType },

@@ -1,6 +1,7 @@
 import { TABLES } from "../environment";
-import { GetMany } from "./resolverHelper";
+import { GetMany, GetSingle } from "./resolverHelper";
 import removeEmptyStrings from "../utils/removeEmptyStrings";
+import GetCompanyResolver from "./getCompanyResolver";
 
 // Gets all offers
 const GetOffersResolver = async db => {
@@ -19,9 +20,9 @@ const GetOffersResolver = async db => {
         ":id": offerId
       }
     });
-    console.log(bonusesParams);
     let bonuses = await db.query(bonusesParams).promise();
-    res.push({ ...offer, bonuses: bonuses.Items });
+    let company = await GetCompanyResolver(db, { id: offer.company_id });
+    res.push({ ...offer, company, bonuses: bonuses.Items });
   }
   return { edges: res };
 };
