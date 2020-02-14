@@ -9,4 +9,12 @@ const GetSingle = async (db, table, item_id) => {
   return response.Item || {};
 };
 
-export { GetSingle };
+const GetMany = async (db, table) => {
+  const params = {
+    TableName: table
+  };
+  let results = await db.scan(params).promise();
+  return results.Items || [];
+};
+
+export { GetSingle, GetMany };
