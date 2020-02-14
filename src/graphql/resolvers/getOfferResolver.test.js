@@ -10,7 +10,7 @@ describe("Resolvers", () => {
             promise: () => {
               return {
                 Item: {
-                  offer_id: "54321",
+                  id: "54321",
                   position_type: "Full-Time",
                   position_title: "Janitor"
                 }
@@ -19,16 +19,16 @@ describe("Resolvers", () => {
           })
         },
         args: {
-          offer_id: "54321"
+          id: "54321"
         },
         expectedDBCall: {
           TableName: "OfferDev",
           Key: {
-            offer_id: "54321"
+            id: "54321"
           }
         },
         expectedRetValue: {
-          offer_id: "54321",
+          id: "54321",
           position_type: "Full-Time",
           position_title: "Janitor"
         }
@@ -45,12 +45,12 @@ describe("Resolvers", () => {
           })
         },
         args: {
-          offer_id: "1423"
+          id: "1423"
         },
         expectedDBCall: {
           TableName: "OfferDev",
           Key: {
-            offer_id: "1423"
+            id: "1423"
           }
         },
         expectedRetValue: {}

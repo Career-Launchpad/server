@@ -62,7 +62,7 @@ describe("Resolvers", () => {
         },
         expectedRetValue: {
           ...testValues[0].offer,
-          offer_id: 123456789,
+          id: 123456789,
           location_id: testValues[0].location_id
         }
       },
@@ -97,7 +97,7 @@ describe("Resolvers", () => {
         },
         expectedRetValue: {
           ...testValues[0].offer,
-          offer_id: 123456789,
+          id: 123456789,
           location_id: testValues[0].location_id
         }
       },
