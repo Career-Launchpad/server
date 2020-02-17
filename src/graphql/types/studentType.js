@@ -37,9 +37,16 @@ const StudentType = new GraphQLObjectType({
   })
 });
 
+const StudentConnection = new GraphQLObjectType({
+  name: "studentConnection",
+  fields: () => ({
+    edges: { type: GraphQLList(StudentType) }
+  })
+});
+
 const CreateStudentInput = new GraphQLInputObjectType({
   name: "createStudentInput",
   fields: () => student
 });
 
-export { CreateStudentInput, StudentType };
+export { CreateStudentInput, StudentConnection, StudentType };
