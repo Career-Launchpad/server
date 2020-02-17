@@ -6,7 +6,7 @@ import cors from "cors";
 import DynamoDB from "aws-sdk/clients/dynamodb";
 import Schema from "./schema";
 
-const dynamoDB = new DynamoDB.DocumentClient({ region: "us-east-1" });
+export const dynamoDB = new DynamoDB.DocumentClient({ region: "us-east-1" });
 const app = express();
 app.use(cors());
 app.use(

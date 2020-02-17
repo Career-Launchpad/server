@@ -5,7 +5,11 @@ import {
   GraphQLInputObjectType
 } from "graphql";
 
-import { OfferType } from "./offerType";
+import { dynamoDB } from "../index";
+
+import { GetOffersResolver } from "../resolvers";
+
+import { OfferType, OfferConnection } from "./offerType";
 
 const student = {
   id: { type: GraphQLString },
@@ -26,13 +30,9 @@ const StudentType = new GraphQLObjectType({
     ...student,
     security_level: { type: GraphQLString },
     offers: {
-      type: GraphQLList(OfferType),
+      type: OfferConnection,
       args: { student_id: { type: GraphQLString } },
-      resolve(parent, args) {
-        //   TODO: Create Resolver
-        console.log(parent);
-        console.log(args);
-      }
+      resolve: async parent => GetOffersResolver(dynamoDB, parent.id)
     }
   })
 });
