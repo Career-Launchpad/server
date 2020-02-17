@@ -9,6 +9,7 @@ import {
 import {
   StudentType,
   OfferConnection,
+  StudentConnection,
   OfferType,
   CreateStudentInput,
   CreateOfferInput,
@@ -52,7 +53,7 @@ let Schema = db => {
         resolve: async _ => GetOffersResolver(db)
       },
       students: {
-        type: GraphQLList(StudentType),
+        type: StudentConnection,
         args: {
           gender: { type: GraphQLString }
         },
