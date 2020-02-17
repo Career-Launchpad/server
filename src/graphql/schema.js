@@ -27,7 +27,7 @@ import {
   GetCompaniesResolver,
   GetCompanyResolver,
   GetMajorsResolver
-} from "./resolvers/resolvers";
+} from "./resolvers";
 
 let Schema = db => {
   const QueryType = new GraphQLObjectType({
