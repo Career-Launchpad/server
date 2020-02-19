@@ -13,7 +13,10 @@ import {
   OfferType,
   CreateStudentInput,
   CreateOfferInput,
-  CompanyType
+  CompanyType,
+  CompanyConnection,
+  LocationConnection,
+  BonusConnection
 } from "./types";
 
 import {
@@ -64,7 +67,7 @@ let Schema = db => {
         resolve: async _ => GetCompanyNamesResolver(db)
       },
       companies: {
-        type: GraphQLList(CompanyType),
+        type: CompanyConnection,
         resolve: async (_, args) => GetCompaniesResolver(db, args)
       },
       company: {

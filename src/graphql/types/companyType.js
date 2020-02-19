@@ -10,4 +10,11 @@ const CompanyType = new GraphQLObjectType({
   fields: () => company
 });
 
-export { CompanyType };
+const CompanyConnection = new GraphQLObjectType({
+  name: "companyConnection",
+  fields: () => ({
+    edges: { type: GraphQLList(CompanyType) }
+  })
+});
+
+export { CompanyType, CompanyConnection };

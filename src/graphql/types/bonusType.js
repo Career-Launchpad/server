@@ -26,4 +26,11 @@ const BonusInput = new GraphQLInputObjectType({
   fields: () => bonus
 });
 
-export { BonusInput, BonusType };
+const BonusConnection = new GraphQLObjectType({
+  name: "bonusConnection",
+  fields: () => ({
+    edges: { type: GraphQLList(BonusType) }
+  })
+});
+
+export { BonusInput, BonusType, BonusConnection };
