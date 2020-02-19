@@ -25,6 +25,9 @@ describe("Resolvers", () => {
             }
           })
         },
+        args: {
+          filters: null
+        },
         expectedDBCall: {
           TableName: "StudentDev"
         },
@@ -40,6 +43,9 @@ describe("Resolvers", () => {
               };
             }
           })
+        },
+        args: {
+          filters: null
         },
         expectedDBCall: {
           TableName: "StudentDev"

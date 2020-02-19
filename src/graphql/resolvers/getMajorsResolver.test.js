@@ -15,6 +15,9 @@ const majors = ["Computer Science", "Electrical Engineering"];
 const testcases = [
   {
     desc: "should return all majors",
+    args: {
+      filters: null
+    },
     db: {
       scan: jest.fn().mockReturnValue({
         promise: () => {
@@ -31,6 +34,9 @@ const testcases = [
   },
   {
     desc: "should return empty array",
+    args: {
+      filters: null
+    },
     db: {
       scan: jest.fn().mockReturnValue({
         promise: () => {
@@ -49,9 +55,11 @@ const testcases = [
 
 describe("GetMajorsResolver", () => {
   testcases.forEach(
-    async ({ db, expectedDBCalls, expectedRetValue, desc }, i) => {
+    async ({ db, args, expectedDBCalls, expectedRetValue, desc }, i) => {
       it(desc, async () => {
-        await expect(GetMajorsResolver(db)).resolves.toEqual(expectedRetValue);
+        await expect(GetMajorsResolver(db, args)).resolves.toEqual(
+          expectedRetValue
+        );
         Object.keys(expectedDBCalls).forEach(key => {
           const expected = expectedDBCalls[key];
           expect(db[key].mock.calls[0][0]).toEqual(expected);

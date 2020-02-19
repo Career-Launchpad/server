@@ -56,18 +56,24 @@ let Schema = db => {
       },
       offers: {
         type: OfferConnection,
-        resolve: async _ => GetOffersResolver(db)
+        args: {
+          filters: { type: GraphQLList(FilterType) }
+        },
+        resolve: async (_, args) => GetOffersResolver(db, args)
       },
       students: {
         type: StudentConnection,
         args: {
-          gender: { type: GraphQLString }
+          filters: { type: GraphQLList(FilterType) }
         },
         resolve: async (_, args) => GetStudentsResolver(db, args)
       },
       company_names: {
         type: GraphQLList(GraphQLString),
-        resolve: async _ => GetCompanyNamesResolver(db)
+        args: {
+          filters: { type: GraphQLList(FilterType) }
+        },
+        resolve: async (_, args) => GetCompanyNamesResolver(db, args)
       },
       companies: {
         type: CompanyConnection,
@@ -85,6 +91,9 @@ let Schema = db => {
       },
       majors: {
         type: GraphQLList(GraphQLString),
+        args: {
+          filters: { type: GraphQLList(FilterType) }
+        },
         resolve: async (_, args) => GetMajorsResolver(db, args)
       }
     })

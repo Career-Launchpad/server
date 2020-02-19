@@ -17,25 +17,29 @@ const GetMany = async (db, table) => {
   return results.Items || [];
 };
 
-const GetFiltered = async (db, table, filters = []) => {
-  let KeyCondition = "";
-  let Expression = {};
+const GetFiltered = async (db, table, filters) => {
+  let FilterExpression;
+  let ExpressionAttributeValues;
 
-  for (temp in filters) {
-    const item = temp.field;
-    const value = temp.value;
-    const comp = temp.comp;
-    Expression[`:${item}`] = { S: value };
-    KeyCondition += `${item} ${comp} :${item} `;
+  if (filters) {
+    ExpressionAttributeValues = {};
+    FilterExpression = "";
+    for (let i in filters) {
+      const item = filters[i].field;
+      const value = filters[i].value;
+      const comp = filters[i].comp;
+      ExpressionAttributeValues[`:${item}`] = value;
+      FilterExpression += `${item} ${comp} :${item} `;
+    }
   }
 
   const params = {
     TableName: table,
-    ExpressionAttributeValues: Expression,
-    KeyConditionExpression: KeyCondition
+    FilterExpression,
+    ExpressionAttributeValues
   };
 
-  results = await db.scan(params).promise();
+  let results = await db.scan(params).promise();
   return results.Items || [];
 };
 

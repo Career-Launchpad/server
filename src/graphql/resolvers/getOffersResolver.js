@@ -5,24 +5,7 @@ import GetCompanyResolver from "./getCompanyResolver";
 
 // Gets all offers
 const GetOffersResolver = async (db, args) => {
-  // let offers;
-  // let offerParams = { TableName: TABLES.Offer };
-  // if (studentId) {
-  //   offers = await db
-  //     .query({
-  //       ...offerParams,
-  //       KeyConditionExpression: "student_id = :id",
-  //       ExpressionAttributeValues: {
-  //         ":id": studentId
-  //       }
-  //     })
-  //     .promise();
-  // } else {
-  //   offers = await db.scan(offerParams).promise();
-  // }
-  // offers = offers.Items || [];
-
-  offers = await GetFiltered(db, TABLES.Offer, args.filters);
+  let offers = await GetFiltered(db, TABLES.Offer, args.filters);
 
   let res = [];
   for await (let offer of offers) {

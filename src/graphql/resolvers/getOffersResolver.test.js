@@ -66,6 +66,9 @@ describe("Resolvers", () => {
             }
           })
         },
+        args: {
+          filters: null
+        },
         expectedDBCalls: {
           scan: { TableName: "OfferDev" },
           query: {

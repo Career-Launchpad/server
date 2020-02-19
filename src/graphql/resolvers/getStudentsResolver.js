@@ -1,9 +1,9 @@
 import { TABLES } from "../environment";
-import { GetMany } from "./resolverHelper";
+import { GetMany, GetFiltered } from "./resolverHelper";
 
 // Gets all students
 const GetStudentsResolver = async (db, args) => {
-  const res = await GetMany(db, TABLES.Student);
+  const res = await GetFiltered(db, TABLES.Student, args.filters);
   return { edges: res };
 };
 

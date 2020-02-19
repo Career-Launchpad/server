@@ -40,10 +40,13 @@ const testcases = [
         }
       })
     },
+    args: {
+      filters: null
+    },
     expectedDBCalls: {
       scan: { TableName: TABLES.Company }
     },
-    expectedRetValue: companies
+    expectedRetValue: { edges: companies }
   },
   {
     desc: "should return empty array",
@@ -56,18 +59,21 @@ const testcases = [
         }
       })
     },
+    args: {
+      filters: null
+    },
     expectedDBCalls: {
       scan: { TableName: TABLES.Company }
     },
-    expectedRetValue: []
+    expectedRetValue: { edges: [] }
   }
 ];
 
 describe("GetCompaniesResolver", () => {
   testcases.forEach(
-    async ({ db, expectedDBCalls, expectedRetValue, desc }, i) => {
+    async ({ db, args, expectedDBCalls, expectedRetValue, desc }, i) => {
       it(desc, async () => {
-        await expect(GetCompaniesResolver(db)).resolves.toEqual(
+        await expect(GetCompaniesResolver(db, args)).resolves.toEqual(
           expectedRetValue
         );
         Object.keys(expectedDBCalls).forEach(key => {
