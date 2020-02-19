@@ -1,22 +1,21 @@
 import removeEmptyStrings from "./removeEmptyStrings";
 
+const testcases = [
+  {
+    input: {
+      a: "a",
+      b: "b",
+      c: ""
+    },
+    expected: {
+      a: "a",
+      b: "b"
+    }
+  }
+];
 describe("removeEmptyStrings", () => {
-  it("should remove attributes with empty strings from an object", () => {
-    const testcases = [
-      {
-        input: {
-          a: "a",
-          b: "b",
-          c: ""
-        },
-        expected: {
-          a: "a",
-          b: "b"
-        }
-      }
-    ];
-
-    testcases.forEach(({ input, expected }) => {
+  testcases.forEach(({ input, expected }) => {
+    it("test", () => {
       expect(removeEmptyStrings(input)).toEqual(expected);
     });
   });

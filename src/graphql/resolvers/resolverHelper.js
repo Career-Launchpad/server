@@ -29,7 +29,7 @@ const GetFiltered = async (db, table, filters) => {
       const value = filters[i].value;
       const comp = filters[i].comp;
       ExpressionAttributeValues[`:${item}`] = value;
-      FilterExpression += `${item} ${comp} :${item} `;
+      FilterExpression += `${item} ${comp} :${item}`;
     }
   }
 
