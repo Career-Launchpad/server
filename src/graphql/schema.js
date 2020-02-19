@@ -3,7 +3,8 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLSchema,
-  GraphQLList
+  GraphQLList,
+  GraphQLInputType
 } from "graphql";
 
 import {
@@ -16,7 +17,9 @@ import {
   CompanyType,
   CompanyConnection,
   LocationConnection,
-  BonusConnection
+  BonusConnection,
+  Filters,
+  FilterType
 } from "./types";
 
 import {
@@ -68,6 +71,9 @@ let Schema = db => {
       },
       companies: {
         type: CompanyConnection,
+        args: {
+          filters: { type: GraphQLList(FilterType) }
+        },
         resolve: async (_, args) => GetCompaniesResolver(db, args)
       },
       company: {

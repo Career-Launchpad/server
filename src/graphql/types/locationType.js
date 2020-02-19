@@ -1,7 +1,8 @@
 import {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLInputObjectType
+  GraphQLInputObjectType,
+  GraphQLList
 } from "graphql";
 
 const location = {

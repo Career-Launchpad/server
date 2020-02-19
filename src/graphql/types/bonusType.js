@@ -4,7 +4,8 @@ import {
   GraphQLBoolean,
   GraphQLInputObjectType,
   GraphQLFloat,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLList
 } from "graphql";
 
 const bonus = {

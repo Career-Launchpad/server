@@ -11,3 +11,4 @@ export {
   CreateStudentInput
 } from "./studentType";
 export { CompanyType, CompanyConnection } from "./companyType";
+export { Filters, FilterType } from "./filterType";
