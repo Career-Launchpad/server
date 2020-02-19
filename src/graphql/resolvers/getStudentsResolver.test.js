@@ -28,7 +28,7 @@ describe("Resolvers", () => {
         expectedDBCall: {
           TableName: "StudentDev"
         },
-        expectedRetValue: students
+        expectedRetValue: { edges: students }
       },
       {
         desc: "shouldn't return students",
@@ -44,7 +44,7 @@ describe("Resolvers", () => {
         expectedDBCall: {
           TableName: "StudentDev"
         },
-        expectedRetValue: []
+        expectedRetValue: { edges: [] }
       }
     ];
 

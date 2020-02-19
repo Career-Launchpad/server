@@ -9,7 +9,10 @@ describe("Resolvers", () => {
         position_title: "Janitor",
         accepted: true,
         academic_year: "Senior",
-        company_name: "Qualtrics",
+        company: {
+          id: "4312",
+          name: "Qualtrics"
+        },
         flag: true,
         student_id: "My student id",
         location: {
@@ -32,6 +35,11 @@ describe("Resolvers", () => {
       }
     ];
 
+    const company = {
+      id: "4312",
+      name: "Qualtrics"
+    };
+
     const testcases = [
       {
         desc: "should return all offer objects",
@@ -47,6 +55,13 @@ describe("Resolvers", () => {
             promise: () => {
               return {
                 Items: bonuses
+              };
+            }
+          }),
+          get: jest.fn().mockReturnValue({
+            promise: () => {
+              return {
+                Item: company
               };
             }
           })

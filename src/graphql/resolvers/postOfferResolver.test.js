@@ -6,6 +6,8 @@ describe("Resolvers", () => {
   });
 
   it("PostOfferResolver", async () => {
+    const time = new Date("2019");
+    global.Date = jest.fn(() => time);
     const testValues = [
       {
         offer: {
@@ -15,8 +17,8 @@ describe("Resolvers", () => {
           academic_year: "Senior",
           company_name: "test",
           company_id: "coolcompanyid",
-          flag: false,
           student_id: "mylord",
+          timestamp: time.getTime(),
           wage_value: 1
         },
         location: {

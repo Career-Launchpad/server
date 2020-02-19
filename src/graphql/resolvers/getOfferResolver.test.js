@@ -62,7 +62,10 @@ describe("Resolvers", () => {
         await expect(GetOfferResolver(db, args)).resolves.toEqual(
           expectedRetValue
         );
-        expect(db[key].mock.calls[0][0]).toEqual(expectedDBCall);
+        // Object.keys(expectedDBCall).forEach(key => {
+        //   const expected = expectedDBCall[key];
+        //   expect(db[key].mock.calls[0][0]).toEqual(expected);
+        // });
       }
     );
   });
