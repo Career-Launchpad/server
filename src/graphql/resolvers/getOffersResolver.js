@@ -1,26 +1,13 @@
 import { TABLES } from "../environment";
-import { GetMany, GetSingle } from "./resolverHelper";
+import { dbScan } from "./resolverHelper";
 import removeEmptyStrings from "../utils/removeEmptyStrings";
 import GetCompanyResolver from "./getCompanyResolver";
 
-// Gets all offers
-const GetOffersResolver = async (db, studentId = "") => {
-  let offers;
-  let offerParams = { TableName: TABLES.Offer };
-  if (studentId) {
-    offers = await db
-      .query({
-        ...offerParams,
-        KeyConditionExpression: "student_id = :id",
-        ExpressionAttributeValues: {
-          ":id": studentId
-        }
-      })
-      .promise();
-  } else {
-    offers = await db.scan(offerParams).promise();
-  }
-  offers = offers.Items || [];
+/*
+ * Returns a list of offers
+ */
+const GetOffersResolver = async (db, args) => {
+  let offers = await dbScan(db, TABLES.Offer, args.filters);
 
   let res = [];
   for await (let offer of offers) {

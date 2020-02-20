@@ -1,7 +1,8 @@
 import {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLInputObjectType
+  GraphQLInputObjectType,
+  GraphQLList
 } from "graphql";
 
 const location = {
@@ -20,4 +21,11 @@ const LocationInput = new GraphQLInputObjectType({
   fields: () => location
 });
 
-export { LocationInput, LocationType };
+const LocationConnection = new GraphQLObjectType({
+  name: "locationConnection",
+  fields: () => ({
+    edges: { type: GraphQLList(LocationConnection) }
+  })
+});
+
+export { LocationInput, LocationType, LocationConnection };

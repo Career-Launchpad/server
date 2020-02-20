@@ -3,7 +3,8 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLSchema,
-  GraphQLList
+  GraphQLList,
+  GraphQLInputType
 } from "graphql";
 
 import {
@@ -13,7 +14,12 @@ import {
   OfferType,
   CreateStudentInput,
   CreateOfferInput,
-  CompanyType
+  CompanyType,
+  CompanyConnection,
+  LocationConnection,
+  BonusConnection,
+  Filters,
+  FilterType
 } from "./types";
 
 import {
@@ -50,21 +56,30 @@ let Schema = db => {
       },
       offers: {
         type: OfferConnection,
-        resolve: async _ => GetOffersResolver(db)
+        args: {
+          filters: { type: GraphQLList(FilterType) }
+        },
+        resolve: async (_, args) => GetOffersResolver(db, args)
       },
       students: {
         type: StudentConnection,
         args: {
-          gender: { type: GraphQLString }
+          filters: { type: GraphQLList(FilterType) }
         },
         resolve: async (_, args) => GetStudentsResolver(db, args)
       },
       company_names: {
         type: GraphQLList(GraphQLString),
-        resolve: async _ => GetCompanyNamesResolver(db)
+        args: {
+          filters: { type: GraphQLList(FilterType) }
+        },
+        resolve: async (_, args) => GetCompanyNamesResolver(db, args)
       },
       companies: {
-        type: GraphQLList(CompanyType),
+        type: CompanyConnection,
+        args: {
+          filters: { type: GraphQLList(FilterType) }
+        },
         resolve: async (_, args) => GetCompaniesResolver(db, args)
       },
       company: {
@@ -76,6 +91,9 @@ let Schema = db => {
       },
       majors: {
         type: GraphQLList(GraphQLString),
+        args: {
+          filters: { type: GraphQLList(FilterType) }
+        },
         resolve: async (_, args) => GetMajorsResolver(db, args)
       }
     })

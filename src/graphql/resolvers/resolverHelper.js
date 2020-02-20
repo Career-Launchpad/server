@@ -1,4 +1,4 @@
-const GetSingle = async (db, table, item_id) => {
+const dbQuery = async (db, table, item_id) => {
   const params = {
     TableName: table,
     Key: {
@@ -9,12 +9,33 @@ const GetSingle = async (db, table, item_id) => {
   return response.Item || {};
 };
 
-const GetMany = async (db, table) => {
+const dbScan = async (db, table, filters) => {
+  let FilterExpression;
+  let ExpressionAttributeValues;
+
+  if (filters) {
+    ExpressionAttributeValues = {};
+    FilterExpression = "";
+    for (let i in filters) {
+      const item = filters[i].field;
+      const value = filters[i].value;
+      const comp = filters[i].comp;
+      ExpressionAttributeValues[`:${item}`] = value;
+      FilterExpression += `${item} ${comp} :${item}`;
+      if (i < filters.length - 1) {
+        FilterExpression += ", ";
+      }
+    }
+  }
+
   const params = {
-    TableName: table
+    TableName: table,
+    FilterExpression,
+    ExpressionAttributeValues
   };
+
   let results = await db.scan(params).promise();
   return results.Items || [];
 };
 
-export { GetSingle, GetMany };
+export { dbQuery, dbScan };
