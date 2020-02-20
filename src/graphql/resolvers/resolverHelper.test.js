@@ -1,6 +1,6 @@
 import { dbQuery, dbScan } from "./resolverHelper";
 
-it("should build filter params for dynamoDB", () => {
+describe("Resolver Helpers", () => {
   const table = "StudentDev";
   const testCases = [
     {
@@ -43,10 +43,14 @@ it("should build filter params for dynamoDB", () => {
     }
   ];
 
-  testCases.forEach(async ({ params, expectedDBCall, expectedRetValue }) => {
-    await expect(
-      dbScan(params.db, params.table, params.filters)
-    ).resolves.toEqual(expectedRetValue);
-    expect(db.scan.mock.calls[i][0]).toEqual(expectedDBCall);
-  });
+  testCases.forEach(
+    async ({ params, description, expectedDBCall, expectedRetValue }) => {
+      it(description, async () => {
+        await expect(
+          dbScan(params.db, params.table, params.filters)
+        ).resolves.toEqual(expectedRetValue);
+        expect(params.db.scan.mock.calls[0][0]).toEqual(expectedDBCall);
+      });
+    }
+  );
 });
