@@ -23,7 +23,7 @@ const dbScan = async (db, table, filters) => {
       ExpressionAttributeValues[`:${item}`] = value;
       FilterExpression += `${item} ${comp} :${item}`;
       if (i < filters.length - 1) {
-        FilterExpression += ", ";
+        FilterExpression += " AND ";
       }
     }
   }
