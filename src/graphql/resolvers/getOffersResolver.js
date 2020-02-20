@@ -1,11 +1,13 @@
 import { TABLES } from "../environment";
-import { GetMany, GetSingle, GetFiltered } from "./resolverHelper";
+import { dbScan } from "./resolverHelper";
 import removeEmptyStrings from "../utils/removeEmptyStrings";
 import GetCompanyResolver from "./getCompanyResolver";
 
-// Gets all offers
+/*
+ * Returns a list of offers
+ */
 const GetOffersResolver = async (db, args) => {
-  let offers = await GetFiltered(db, TABLES.Offer, args.filters);
+  let offers = await dbScan(db, TABLES.Offer, args.filters);
 
   let res = [];
   for await (let offer of offers) {

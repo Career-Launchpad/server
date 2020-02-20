@@ -1,11 +1,11 @@
 import { TABLES } from "../environment";
-import { GetMany, GetFiltered } from "./resolverHelper";
+import { dbScan } from "./resolverHelper";
 
 /*
- * Returns a list of companies
+ * Returns a filtered list of companies
  */
 const GetCompaniesResolver = async (db, args) => {
-  let results = await GetFiltered(db, TABLES.Company, args.filters);
+  let results = await dbScan(db, TABLES.Company, args.filters);
   return { edges: results };
 };
 

@@ -1,4 +1,4 @@
-import { GetMany, GetSingle, GetFiltered } from "./resolverHelper";
+import { dbQuery, dbScan } from "./resolverHelper";
 
 it("should build filter params for dynamoDB", () => {
   const table = "StudentDev";
@@ -45,7 +45,7 @@ it("should build filter params for dynamoDB", () => {
 
   testCases.forEach(async ({ params, expectedDBCall, expectedRetValue }) => {
     await expect(
-      GetFiltered(params.db, params.table, params.filters)
+      dbScan(params.db, params.table, params.filters)
     ).resolves.toEqual(expectedRetValue);
     expect(db.scan.mock.calls[i][0]).toEqual(expectedDBCall);
   });

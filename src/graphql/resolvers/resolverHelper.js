@@ -1,4 +1,4 @@
-const GetSingle = async (db, table, item_id) => {
+const dbQuery = async (db, table, item_id) => {
   const params = {
     TableName: table,
     Key: {
@@ -9,15 +9,7 @@ const GetSingle = async (db, table, item_id) => {
   return response.Item || {};
 };
 
-const GetMany = async (db, table) => {
-  const params = {
-    TableName: table
-  };
-  let results = await db.scan(params).promise();
-  return results.Items || [];
-};
-
-const GetFiltered = async (db, table, filters) => {
+const dbScan = async (db, table, filters) => {
   let FilterExpression;
   let ExpressionAttributeValues;
 
@@ -29,7 +21,10 @@ const GetFiltered = async (db, table, filters) => {
       const value = filters[i].value;
       const comp = filters[i].comp;
       ExpressionAttributeValues[`:${item}`] = value;
-      FilterExpression += `${item} ${comp} :${item} `;
+      FilterExpression += `${item} ${comp} :${item}`;
+      if (i < filters.length) {
+        FilterExpression += ", ";
+      }
     }
   }
 
@@ -43,4 +38,4 @@ const GetFiltered = async (db, table, filters) => {
   return results.Items || [];
 };
 
-export { GetSingle, GetMany, GetFiltered };
+export { dbQuery, dbScan };
