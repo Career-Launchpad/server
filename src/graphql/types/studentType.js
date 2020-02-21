@@ -32,7 +32,12 @@ const StudentType = new GraphQLObjectType({
     offers: {
       type: OfferConnection,
       args: { student_id: { type: GraphQLString } },
-      resolve: async parent => GetOffersResolver(dynamoDB, parent.id)
+      resolve: async (parent, args) => {
+        return GetOffersResolver(dynamoDB, {
+          ...args,
+          filters: [{ field: "student_id", value: parent.id, comp: "=" }]
+        });
+      }
     }
   })
 });
