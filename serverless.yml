@@ -53,3 +53,10 @@ functions:
           path: domains
           method: post
           cors: true
+  linkedin:
+    handler: dist/linkedin.handler
+    events:
+      - http:
+          path: domains
+          method: post
+          cors: true
