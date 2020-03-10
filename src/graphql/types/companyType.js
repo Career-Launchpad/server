@@ -1,8 +1,14 @@
-import { GraphQLObjectType, GraphQLString, GraphQLList } from "graphql";
+import {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLList,
+  GraphQLInt
+} from "graphql";
 
 const company = {
   id: { type: GraphQLString },
-  name: { type: GraphQLString }
+  name: { type: GraphQLString },
+  offersCount: { type: GraphQLInt }
 };
 
 const CompanyType = new GraphQLObjectType({
