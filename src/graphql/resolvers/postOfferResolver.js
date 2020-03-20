@@ -48,35 +48,18 @@ const putLocation = async (db, location) => {
   return location_id;
 };
 
-const putBonuses = async (db, bonuses, company_id) => {
-  if (bonuses) {
-    for await (let bonus of bonuses) {
-      const postBonusParams = {
-        TableName: TABLES.Bonus,
-        Item: {
-          id: company_id,
-          ...removeEmptyStrings(bonus)
-        }
-      };
-      await db.put(postBonusParams).promise();
-    }
-  }
-};
-
 const PostOfferResolver = async (db, args) => {
   try {
     const company = await queryCompany(db, args.offer.company_name);
     const location_id = await putLocation(db, args.offer.location);
-    await putBonuses(db, args.offer.bonuses, company.id);
 
-    delete args.offer.bonuses;
     delete args.offer.location;
 
     let uploadable = {
       ...removeEmptyStrings(args.offer),
       location_id,
       id: uuidv4(),
-      company_id: company.id,
+      company,
       timestamp: new Date().getTime()
     };
 

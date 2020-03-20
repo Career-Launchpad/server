@@ -19,72 +19,35 @@ const offers = [
       country: "USA"
     },
     wage_value: 123456,
-    wage_type: "salary"
+    wage_type: "salary",
+    bonuses: [
+      {
+        value: 20000,
+        type: "Free money",
+        repeat_count: 5,
+        one_time: false,
+        description: "Just some free money for the new janitor"
+      }
+    ]
   }
 ];
-
-const bonuses = [
-  {
-    value: 20000,
-    type: "Free money",
-    repeat_count: 5,
-    one_time: false,
-    description: "Just some free money for the new janitor"
-  }
-];
-
-const company = {
-  id: "4312",
-  name: "Qualtrics"
-};
 
 const testcases = [
   {
     desc: "should return all offer objects",
     db: {
       scan: jest.fn().mockReturnValue({
-        promise: () => {
-          return {
-            Items: offers
-          };
-        }
-      }),
-      query: jest.fn().mockReturnValue({
-        promise: () => {
-          return {
-            Items: bonuses
-          };
-        }
-      }),
-      get: jest.fn().mockReturnValue({
-        promise: () => {
-          return {
-            Item: company
-          };
-        }
+        promise: () => ({ Items: offers })
       })
     },
     args: {
       filters: null
     },
     expectedDBCalls: {
-      scan: { TableName: "OfferDev" },
-      query: {
-        TableName: "BonusDev",
-        KeyConditionExpression: "#i = :id",
-        ExpressionAttributeNames: { "#i": "id" },
-        ExpressionAttributeValues: {
-          ":id": "1234"
-        }
-      }
+      scan: { TableName: "OfferDev" }
     },
     expectedRetValue: {
-      edges: [
-        {
-          ...offers[0],
-          bonuses: bonuses
-        }
-      ]
+      edges: [...offers]
     }
   }
 ];
