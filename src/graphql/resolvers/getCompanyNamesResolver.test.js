@@ -1,36 +1,36 @@
 import GetCompanyNamesResolver from "./getCompanyNamesResolver";
 import { TABLES } from "../environment";
 
-const offers = [
+const companies = [
   {
-    company_name: "Qualtrics"
+    name: "Qualtrics"
   },
   {
-    company_name: "Qualtrics"
+    name: "Qualtrics"
   },
   {
-    company_name: "Quizlet"
+    name: "Quizlet"
   },
   {
-    company_name: "Qualtrics"
+    name: "Qualtrics"
   },
   {
-    company_name: "Brevium"
+    name: "Brevium"
   },
   {
-    company_name: "Qualtrics"
+    name: "Qualtrics"
   },
   {
-    company_name: "Qualtrics"
+    name: "Qualtrics"
   },
   {
-    company_name: "Podium"
+    name: "Podium"
   },
   {
-    company_name: "Proofpoint"
+    name: "Proofpoint"
   },
   {
-    company_name: "Zebra"
+    name: "Zebra"
   }
 ];
 
@@ -41,13 +41,13 @@ const testcases = [
       scan: jest.fn().mockReturnValue({
         promise: () => {
           return {
-            Items: offers
+            Items: companies
           };
         }
       })
     },
     expectedDBCalls: {
-      scan: { TableName: TABLES.Offer }
+      scan: { TableName: TABLES.Company }
     },
     expectedRetValue: [
       "Brevium",

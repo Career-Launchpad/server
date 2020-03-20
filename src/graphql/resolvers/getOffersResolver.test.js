@@ -1,4 +1,5 @@
 import GetOffersResolver from "./getOffersResolver";
+import { TABLES } from "../environment";
 
 const offers = [
   {
@@ -38,13 +39,16 @@ const testcases = [
     db: {
       scan: jest.fn().mockReturnValue({
         promise: () => ({ Items: offers })
+      }),
+      get: jest.fn().mockReturnValue({
+        promise: () => ({ Item: company })
       })
     },
     args: {
       filters: null
     },
     expectedDBCalls: {
-      scan: { TableName: "OfferDev" }
+      scan: { TableName: TABLES.Offer }
     },
     expectedRetValue: {
       edges: [...offers]
@@ -53,17 +57,13 @@ const testcases = [
 ];
 
 describe("Resolvers", () => {
-  testcases.forEach(
-    async ({ db, desc, args, expectedDBCalls, expectedRetValue }, i) => {
-      it(desc, async () => {
-        await expect(GetOffersResolver(db, args)).resolves.toEqual(
-          expectedRetValue
-        );
-        Object.keys(expectedDBCalls).forEach(key => {
-          const expected = expectedDBCalls[key];
-          expect(db[key].mock.calls[0][0]).toEqual(expected);
-        });
+  testcases.forEach(async ({ db, desc, args, expectedDBCalls, expectedRetValue }, i) => {
+    it(desc, async () => {
+      await expect(GetOffersResolver(db, args)).resolves.toEqual(expectedRetValue);
+      Object.keys(expectedDBCalls).forEach(key => {
+        const expected = expectedDBCalls[key];
+        expect(db[key].mock.calls[0][0]).toEqual(expected);
       });
-    }
-  );
+    });
+  });
 });

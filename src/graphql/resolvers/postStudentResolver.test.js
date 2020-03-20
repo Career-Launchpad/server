@@ -1,4 +1,5 @@
 import PostStudentResolver from "./postStudentResolver";
+import { TABLES } from "../environment";
 
 const testcases = [
   {
@@ -14,7 +15,7 @@ const testcases = [
       }
     },
     expectedDBCall: {
-      TableName: "StudentDev",
+      TableName: TABLES.Student,
       Item: {
         id: "thisisauniqueid",
         firstname: "Braden",

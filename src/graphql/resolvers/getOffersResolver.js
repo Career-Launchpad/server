@@ -1,6 +1,5 @@
 import { TABLES } from "../environment";
 import { dbScan } from "./resolverHelper";
-import removeEmptyStrings from "../utils/removeEmptyStrings";
 import GetCompanyResolver from "./getCompanyResolver";
 
 /*
