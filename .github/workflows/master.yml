@@ -23,7 +23,8 @@ jobs:
         run: |
           npm ci
           npm install -g serverless
-          npm run deploydev
+          npm run deploy-schema
+          npm run deploy-dev
           npm run deploy
         env:
           CI: true

@@ -9,7 +9,6 @@ const testValues = [
       position_title: "King",
       accepted: true,
       academic_year: "Senior",
-      company_name: "test",
       company_id: "coolcompanyid",
       student_id: "mylord",
       timestamp: time.getTime(),
@@ -31,39 +30,24 @@ const testValues = [
     location_id: "LondonStateEngland".replace(/\s/g, "")
   }
 ];
+
 const testcases = [
   {
     desc: "should post an offer and the new company object with the given args",
     db: {
       query: jest.fn().mockReturnValue({
-        promise: () => {
-          return {};
-        }
+        promise: () => ({})
       }),
       put: jest.fn().mockReturnValue({
-        promise: () => {
-          return {
-            Items: [
-              {
-                name: "test",
-                id: "coolcompanyid"
-              }
-            ]
-          };
-        }
+        promise: () => ({
+          Items: [{ name: "test", id: "coolcompanyid" }]
+        })
       }),
       // query location
       query: jest.fn().mockReturnValue({
-        promise: () => {
-          return {
-            Items: [
-              {
-                name: "test",
-                id: "coolcompanyid"
-              }
-            ]
-          };
-        }
+        promise: () => ({
+          Items: [{ name: "test", id: "coolcompanyid" }]
+        })
       })
     },
     args: {

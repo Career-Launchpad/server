@@ -1,7 +1,8 @@
 import { dbQuery, dbScan } from "./resolverHelper";
+import { TABLES } from "../environment";
 
 describe("Resolver Helpers", () => {
-  const table = "StudentDev";
+  const table = TABLES.Student;
   const testCases = [
     {
       description: "should pull single param from object",

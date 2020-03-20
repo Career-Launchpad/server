@@ -1,4 +1,5 @@
 import GetStudentsResolver from "./getStudentsResolver";
+import { TABLES } from "../environment";
 
 const students = [
   {
@@ -27,7 +28,7 @@ const testcases = [
       filters: null
     },
     expectedDBCall: {
-      TableName: "StudentDev"
+      TableName: TABLES.Student
     },
     expectedRetValue: { edges: students }
   },
@@ -46,7 +47,7 @@ const testcases = [
       filters: null
     },
     expectedDBCall: {
-      TableName: "StudentDev"
+      TableName: TABLES.Student
     },
     expectedRetValue: { edges: [] }
   }

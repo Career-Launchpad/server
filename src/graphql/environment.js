@@ -10,7 +10,8 @@ const tables = {
     Student: "Student",
     Company: "Company",
     Location: "Location"
-  }
+  },
+  schema: {}
 };
 
 const env = process.env.API_ENV || "development";

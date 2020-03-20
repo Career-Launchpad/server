@@ -1,4 +1,5 @@
 import GetOfferResolver from "./getOfferResolver";
+import { TABLES } from "../environment";
 
 const testcases = [
   {
@@ -21,7 +22,7 @@ const testcases = [
     },
     expectedDBCall: {
       get: {
-        TableName: "OfferDev",
+        TableName: TABLES.Offer,
         Key: {
           id: "54321"
         }
@@ -49,7 +50,7 @@ const testcases = [
     },
     expectedDBCall: {
       get: {
-        TableName: "OfferDev",
+        TableName: TABLES.Offer,
         Key: {
           id: "1423"
         }
