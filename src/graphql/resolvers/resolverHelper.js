@@ -12,16 +12,18 @@ const dbQuery = async (db, table, item_id) => {
 const dbScan = async (db, table, filters) => {
   let FilterExpression;
   let ExpressionAttributeValues;
+  let ExpressionAttributeNames;
 
   if (filters) {
     ExpressionAttributeValues = {};
+    ExpressionAttributeNames = {};
     FilterExpression = "";
     for (let i in filters) {
-      const item = filters[i].field;
-      const value = filters[i].value;
-      const comp = filters[i].comp;
-      ExpressionAttributeValues[`:${item}`] = value;
-      FilterExpression += `${item} ${comp} :${item}`;
+      const { field, value, comp } = filters[i];
+      const fieldName = `#${field}`;
+      FilterExpression += `${fieldName} ${comp} :${field}`;
+      ExpressionAttributeValues[`:${field}`] = value;
+      ExpressionAttributeNames[`${fieldName}`] = field;
       if (i < filters.length - 1) {
         FilterExpression += " AND ";
       }
@@ -31,7 +33,8 @@ const dbScan = async (db, table, filters) => {
   const params = {
     TableName: table,
     FilterExpression,
-    ExpressionAttributeValues
+    ExpressionAttributeValues,
+    ExpressionAttributeNames
   };
 
   let results = await db.scan(params).promise();

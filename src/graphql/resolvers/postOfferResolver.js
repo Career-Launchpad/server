@@ -1,5 +1,6 @@
 import uuidv4 from "uuid/v4";
 import removeEmptyStrings from "../utils/removeEmptyStrings";
+import { dbScan } from "./resolverHelper";
 import { TABLES } from "../environment";
 
 const putCompany = async (db, company_name) => {
@@ -14,25 +15,14 @@ const putCompany = async (db, company_name) => {
 };
 
 const queryCompany = async (db, company_name) => {
-  const companyParams = {
-    TableName: TABLES.Company,
-    IndexName: "name-index",
-    KeyConditionExpression: "#nm = :name",
-    ExpressionAttributeNames: {
-      "#nm": "name"
-    },
-    ExpressionAttributeValues: {
-      ":name": company_name
-    }
-  };
-  const { Items } = await db.query(companyParams).promise();
-  if (Items.length === 0) {
+  let companies = await dbScan(db, TABLES.Company, [
+    { field: "name", comp: "=", value: company_name }
+  ]);
+  if (companies.length === 0) {
     return await putCompany(db, company_name);
   }
-  return {
-    id: Items[0].id,
-    name: Items[0].name
-  };
+  const [company] = companies;
+  return company;
 };
 
 const putLocation = async (db, location) => {
