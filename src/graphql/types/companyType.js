@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLString, GraphQLList } from "graphql";
 import { OfferConnection } from "./offerType";
-import { GetOffersResolver } from "../resolvers";
+import { GetCompaniesOffersResolver } from "../resolvers";
 import { dynamoDB } from "../index";
 
 const company = {
@@ -16,7 +16,7 @@ const CompanyType = new GraphQLObjectType({
       type: OfferConnection,
       args: { company_id: { type: GraphQLString } },
       resolve: async (parent, args) => {
-        return GetOffersResolver(dynamoDB, {
+        return GetCompaniesOffersResolver(dynamoDB, {
           ...args,
           filters: [{ field: "company_id", value: parent.id, comp: "=" }]
         });
