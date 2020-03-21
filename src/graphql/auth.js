@@ -25,7 +25,10 @@ admin.initializeApp({
 });
 
 const firebaseAuthMiddleware = (req, res, next) => {
-  if (process.env.API_ENV === "schema") {
+  if (
+    process.env.API_ENV === "schema" ||
+    process.env.API_ENV === "development"
+  ) {
     next();
     return;
   }

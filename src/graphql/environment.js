@@ -14,6 +14,6 @@ const tables = {
   schema: {}
 };
 
-const env = process.env.API_ENV || "development";
+process.env.API_ENV = process.env.API_ENV || "development";
 
-export const TABLES = tables[env];
+export const TABLES = tables[process.env.API_ENV];

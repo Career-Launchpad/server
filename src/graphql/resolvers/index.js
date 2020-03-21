@@ -7,3 +7,4 @@ export { default as PostStudentResolver } from "./postStudentResolver";
 export { default as GetCompaniesResolver } from "./getCompaniesResolver";
 export { default as GetCompanyResolver } from "./getCompanyResolver";
 export { default as GetMajorsResolver } from "./getMajorsResolver";
+export { default as GetCompaniesOffersResolver } from "./getCompaniesOffersResolver";
