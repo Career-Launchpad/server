@@ -31,9 +31,12 @@ describe("Resolver Helpers", () => {
       },
       expectedDBCall: {
         TableName: table,
-        FilterExpression: "student_id = :student_id",
+        FilterExpression: "#student_id = :student_id",
         ExpressionAttributeValues: {
           ":student_id": "123456789"
+        },
+        ExpressionAttributeNames: {
+          "#student_id": "student_id"
         }
       },
       expectedRetValue: {
