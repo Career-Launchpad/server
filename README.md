@@ -18,6 +18,42 @@ This folder contains root Lambda functions. We currently have 2 set up: 1 for ou
 
 Contains all of the resolver functions. Fairly self explanatory. See "GraphQL" for details on resolvers.
 
+## src/resolvers/getCompaniesResolver.js
+
+Gets all companies from the Company Table
+
+## src/resolvers/getCompanyNamesResolver.js
+
+Returns list of all companies that appear in the Offers table
+
+## src/resolvers/getMajorsResolver.js
+
+Returns list of all majors that appear in the Offers table
+
+## src/resolvers/getOffersResolver.js
+
+Returns a list of all offers
+
+## src/resolvers/getStudentResolver.js
+
+Returns student given filters
+
+## src/resolvers/getStudentsResolver.js
+
+Returns list of all students
+
+## src/resolvers/postOfferResolver.js
+
+Adds Offer to Offers table. This includes adding in bonus information into the bonus table, checking if the company exists already and if not, then adding that company to the company table, Adding the offer location to the locations table.
+
+## src/resolvers/postStudentResolver.js
+
+Adds new student when they input their information through the email form.
+
+## src/resolvers/resolverHelper.js
+
+Helper method that takes any filters passed in GraphQL schema and turns them into a dynamodb filter parameter.
+
 ## src/resources
 
 Folder for code that is not used in project, but important for visualizing overall structure of data and tables. Also contains MySQL snapshot from when we used MySQL with our MVP.
