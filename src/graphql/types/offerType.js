@@ -13,6 +13,7 @@ import { CompanyType } from "./companyType";
 
 const offer = {
   id: { type: GraphQLString },
+  timestamp: { type: GraphQLString },
   position_type: { type: GraphQLString },
   position_title: { type: GraphQLString },
   accepted: { type: GraphQLBoolean },
