@@ -6,6 +6,17 @@ Hi! I'm your helpful successor who cares about knowledge transfer on this projec
 
 Below are the different main folders and their contents explained.
 
+## package.json
+
+There are 4 main scripts that have been defined in the package.json file:
+
+    - "deploy": "API_ENV=production webpack && sls deploy --stage prod" -> This method deploys server functions to prod and makes sure that all tables being referenced are prod tables.
+    - "deploydev": "API_ENV=development webpack && sls deploy" -> This method deploys server functions to dev and makes sure that all tables being referenced are dev tables.
+
+    - "graphql": "nodemon src/graphql/index.js --exec babel-node"
+    - "graphql-lambda": "webpack && ./node_modules/.bin/sls invoke local -f graphql --data {}"
+    These methods allow for local testing of GraphQL to test out resolver methods and ensure proper execution.
+
 ## serverless.yml
 
 This is your main file used for setting up different API endpoints through Lambda. You can add additional api endpoints by adding them below the "functions:" section of the yml file. Follow the conventions as seen in the file. For details on the purpose of the yml file and how to use it you can check out this website: [https://serverless.com/examples/](https://serverless.com/examples/)
