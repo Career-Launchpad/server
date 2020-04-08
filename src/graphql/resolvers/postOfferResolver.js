@@ -1,5 +1,6 @@
 import uuidv4 from "uuid/v4";
 import removeEmptyStrings from "../utils/removeEmptyStrings";
+import { dbScan } from "./resolverHelper";
 import { TABLES } from "../environment";
 
 const putCompany = async (db, company_name) => {
@@ -14,25 +15,14 @@ const putCompany = async (db, company_name) => {
 };
 
 const queryCompany = async (db, company_name) => {
-  const companyParams = {
-    TableName: TABLES.Company,
-    IndexName: "name-index",
-    KeyConditionExpression: "#nm = :name",
-    ExpressionAttributeNames: {
-      "#nm": "name"
-    },
-    ExpressionAttributeValues: {
-      ":name": company_name
-    }
-  };
-  const { Items } = await db.query(companyParams).promise();
-  if (Items.length === 0) {
+  let companies = await dbScan(db, TABLES.Company, [
+    { field: "name", comp: "=", value: company_name }
+  ]);
+  if (companies.length === 0) {
     return await putCompany(db, company_name);
   }
-  return {
-    id: Items[0].id,
-    name: Items[0].name
-  };
+  const [company] = companies;
+  return company;
 };
 
 const putLocation = async (db, location) => {
@@ -48,35 +38,19 @@ const putLocation = async (db, location) => {
   return location_id;
 };
 
-const putBonuses = async (db, bonuses, company_id) => {
-  if (bonuses) {
-    for await (let bonus of bonuses) {
-      const postBonusParams = {
-        TableName: TABLES.Bonus,
-        Item: {
-          id: company_id,
-          ...removeEmptyStrings(bonus)
-        }
-      };
-      await db.put(postBonusParams).promise();
-    }
-  }
-};
-
 const PostOfferResolver = async (db, args) => {
   try {
     const company = await queryCompany(db, args.offer.company_name);
     const location_id = await putLocation(db, args.offer.location);
-    await putBonuses(db, args.offer.bonuses, company.id);
 
-    delete args.offer.bonuses;
+    delete args.offer.company_name;
     delete args.offer.location;
 
     let uploadable = {
       ...removeEmptyStrings(args.offer),
       location_id,
       id: uuidv4(),
-      company_id: company.id,
+      company,
       timestamp: new Date().getTime()
     };
 

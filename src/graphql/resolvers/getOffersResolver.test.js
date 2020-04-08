@@ -1,4 +1,5 @@
 import GetOffersResolver from "./getOffersResolver";
+import { TABLES } from "../environment";
 
 const offers = [
   {
@@ -19,88 +20,50 @@ const offers = [
       country: "USA"
     },
     wage_value: 123456,
-    wage_type: "salary"
+    wage_type: "salary",
+    bonuses: [
+      {
+        value: 20000,
+        type: "Free money",
+        repeat_count: 5,
+        one_time: false,
+        description: "Just some free money for the new janitor"
+      }
+    ]
   }
 ];
-
-const bonuses = [
-  {
-    value: 20000,
-    type: "Free money",
-    repeat_count: 5,
-    one_time: false,
-    description: "Just some free money for the new janitor"
-  }
-];
-
-const company = {
-  id: "4312",
-  name: "Qualtrics"
-};
 
 const testcases = [
   {
     desc: "should return all offer objects",
     db: {
       scan: jest.fn().mockReturnValue({
-        promise: () => {
-          return {
-            Items: offers
-          };
-        }
-      }),
-      query: jest.fn().mockReturnValue({
-        promise: () => {
-          return {
-            Items: bonuses
-          };
-        }
+        promise: () => ({ Items: offers })
       }),
       get: jest.fn().mockReturnValue({
-        promise: () => {
-          return {
-            Item: company
-          };
-        }
+        promise: () => ({ Item: company })
       })
     },
     args: {
       filters: null
     },
     expectedDBCalls: {
-      scan: { TableName: "OfferDev" },
-      query: {
-        TableName: "BonusDev",
-        KeyConditionExpression: "#i = :id",
-        ExpressionAttributeNames: { "#i": "id" },
-        ExpressionAttributeValues: {
-          ":id": "1234"
-        }
-      }
+      scan: { TableName: TABLES.Offer }
     },
     expectedRetValue: {
-      edges: [
-        {
-          ...offers[0],
-          bonuses: bonuses
-        }
-      ]
+      edges: [...offers]
     }
   }
 ];
 
 describe("Resolvers", () => {
-  testcases.forEach(
-    async ({ db, desc, args, expectedDBCalls, expectedRetValue }, i) => {
-      it(desc, async () => {
-        await expect(GetOffersResolver(db, args)).resolves.toEqual(
-          expectedRetValue
-        );
-        Object.keys(expectedDBCalls).forEach(key => {
-          const expected = expectedDBCalls[key];
-          expect(db[key].mock.calls[0][0]).toEqual(expected);
-        });
+  testcases.forEach(async ({ db, desc, args, expectedDBCalls, expectedRetValue }, i) => {
+    it(desc, async () => {
+      await expect(GetOffersResolver(db, args)).resolves.toEqual(expectedRetValue);
+      Object.keys(expectedDBCalls).forEach(key => {
+        const expected = expectedDBCalls[key];
+        expect(db[key].mock.calls[0][0]).toEqual(expected);
       });
-    }
-  );
+    });
+  });
 });

@@ -1,7 +1,8 @@
 import { dbQuery, dbScan } from "./resolverHelper";
+import { TABLES } from "../environment";
 
 describe("Resolver Helpers", () => {
-  const table = "StudentDev";
+  const table = TABLES.Student;
   const testCases = [
     {
       description: "should pull single param from object",
@@ -30,9 +31,12 @@ describe("Resolver Helpers", () => {
       },
       expectedDBCall: {
         TableName: table,
-        FilterExpression: "student_id = :student_id",
+        FilterExpression: "#student_id = :student_id",
         ExpressionAttributeValues: {
           ":student_id": "123456789"
+        },
+        ExpressionAttributeNames: {
+          "#student_id": "student_id"
         }
       },
       expectedRetValue: {

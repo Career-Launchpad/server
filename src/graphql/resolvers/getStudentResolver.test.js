@@ -1,4 +1,5 @@
 import GetStudentResolver from "./getStudentResolver";
+import { TABLES } from "../environment";
 
 const testcases = [
   {
@@ -25,7 +26,7 @@ const testcases = [
       id: "132"
     },
     expectedDBCall: {
-      TableName: "StudentDev",
+      TableName: TABLES.Student,
       Key: {
         id: "132"
       }
@@ -56,7 +57,7 @@ const testcases = [
       id: "12"
     },
     expectedDBCall: {
-      TableName: "StudentDev",
+      TableName: TABLES.Student,
       Key: {
         id: "12"
       }

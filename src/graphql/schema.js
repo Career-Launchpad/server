@@ -68,13 +68,6 @@ let Schema = db => {
         },
         resolve: async (_, args) => GetStudentsResolver(db, args)
       },
-      company_names: {
-        type: GraphQLList(GraphQLString),
-        args: {
-          filters: { type: GraphQLList(FilterType) }
-        },
-        resolve: async (_, args) => GetCompanyNamesResolver(db, args)
-      },
       companies: {
         type: CompanyConnection,
         args: {

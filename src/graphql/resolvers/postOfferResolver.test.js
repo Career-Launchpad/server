@@ -9,7 +9,6 @@ const testValues = [
       position_title: "King",
       accepted: true,
       academic_year: "Senior",
-      company_name: "test",
       company_id: "coolcompanyid",
       student_id: "mylord",
       timestamp: time.getTime(),
@@ -31,39 +30,26 @@ const testValues = [
     location_id: "LondonStateEngland".replace(/\s/g, "")
   }
 ];
+
 const testcases = [
   {
     desc: "should post an offer and the new company object with the given args",
     db: {
       query: jest.fn().mockReturnValue({
-        promise: () => {
-          return {};
-        }
+        promise: () => ({})
       }),
       put: jest.fn().mockReturnValue({
-        promise: () => {
-          return {
-            Items: [
-              {
-                name: "test",
-                id: "coolcompanyid"
-              }
-            ]
-          };
-        }
+        promise: () => ({
+          Items: [{ name: "test", id: "coolcompanyid" }]
+        })
       }),
-      // query location
-      query: jest.fn().mockReturnValue({
-        promise: () => {
-          return {
-            Items: [
-              {
-                name: "test",
-                id: "coolcompanyid"
-              }
-            ]
-          };
-        }
+      scan: jest.fn().mockReturnValue({
+        promise: () => [
+          {
+            name: "test",
+            id: "coolcompanyid"
+          }
+        ]
       })
     },
     args: {
@@ -80,26 +66,20 @@ const testcases = [
     }
   },
   {
-    desc:
-      "should post an offer object with the given args but not post the company object",
+    desc: "should post an offer object with the given args but not post the company object",
     db: {
       put: jest.fn().mockReturnValue({
         promise: () => {
           return { Items: [{ name: "" }] };
         }
       }),
-      // query location
-      query: jest.fn().mockReturnValue({
-        promise: () => {
-          return {
-            Items: [
-              {
-                id: "coolcompanyid",
-                name: "test"
-              }
-            ]
-          };
-        }
+      scan: jest.fn().mockReturnValue({
+        promise: () => [
+          {
+            name: "test",
+            id: "coolcompanyid"
+          }
+        ]
       })
     },
     args: {
@@ -136,9 +116,7 @@ describe("Resolvers", () => {
   });
   testcases.forEach(async ({ db, desc, args, expectedRetValue }, i) => {
     it(desc, async () => {
-      await expect(PostOfferResolver(db, args)).resolves.toEqual(
-        expect.objectContaining(expectedRetValue)
-      );
+      await expect(PostOfferResolver(db, args)).resolves.toEqual(expect.objectContaining(expectedRetValue));
     });
   });
 });

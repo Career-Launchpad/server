@@ -1,7 +1,10 @@
 .DS_Store
 .serverless
 .vscode
+.env.build
 yarn.**
 dist/**
 node_modules/**
 coverage/**
+
+.env.build

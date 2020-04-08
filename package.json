@@ -6,9 +6,10 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "deploy": "API_ENV=production webpack && sls deploy --stage prod",
-    "deploydev": "API_ENV=development webpack && sls deploy",
-    "graphql": "nodemon src/graphql/index.js --exec babel-node",
+    "deploy": "webpack && sls deploy --stage prod",
+    "deploy-schema": "webpack && sls deploy --stage schema",
+    "deploy-dev": "webpack && sls deploy",
+    "graphql": "env-cmd -f .env.build nodemon src/graphql/index.js --exec babel-node",
     "graphql-lambda": "webpack && ./node_modules/.bin/sls invoke local -f graphql --data {}"
   },
   "jest": {
@@ -36,6 +37,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
+    "firebase": "^7.12.0",
+    "firebase-admin": "^8.10.0",
     "graphql": "^14.5.8",
     "graphql-relay": "^0.6.0",
     "node": "^13.1.0",
@@ -49,12 +52,14 @@
     "babel-loader": "^8.0.6",
     "babel-minify-webpack-plugin": "^0.3.1",
     "babel-preset-minify": "^0.5.1",
+    "env-cmd": "^10.1.0",
     "husky": "^3.1.0",
     "jest": "^24.9.0",
+    "minimist": "^1.2.5",
     "nodemon": "^1.19.4",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
-    "serverless": "^1.58.0",
+    "serverless": "^1.66.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   }
