@@ -36,7 +36,7 @@ const passesFilter = (filter, item) => {
 };
 
 const passesFilters = (filters, item) => {
-  return !filters.some(f => !passesFilter(f, item));
+  return filters == null || !filters.some(f => !passesFilter(f, item));
 };
 
 const dbScan = async (db, table, filters) => {
@@ -71,7 +71,14 @@ const dbScan = async (db, table, filters) => {
   };
 
   let results = await db.scan(params).promise();
-  return results.Items.filter(i => passesFilters(postFilters, i)) || [];
+  let items = results.Items || [];
+  if (Array.isArray(items)) {
+    //Array of items
+    return items.filter(i => passesFilters(postFilters, i));
+  } else {
+    //Single item
+    return passesFilters(postFilters, items) ? items : [];
+  }
 };
 
 export { dbQuery, dbScan };
