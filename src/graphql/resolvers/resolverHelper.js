@@ -21,22 +21,39 @@ const getDeepAttribute = (item, path) => {
 
 const passesFilter = (filter, item) => {
   let actual = getDeepAttribute(item, filter.field);
+  let filterValue = parseAs(filter.value, filter.parseValueAs);
   switch (filter.comp) {
     case "=":
-      return actual === filter.value;
+      return actual === filterValue;
     case ">":
-      return actual > filter.value;
+      return actual > filterValue;
     case "<":
-      return actual < filter.value;
+      return actual < filterValue;
     case ">=":
-      return actual >= filter.value;
+      return actual >= filterValue;
     case "<=":
-      return actual <= filter.value;
+      return actual <= filterValue;
   }
 };
 
 const passesFilters = (filters, item) => {
   return filters == null || !filters.some(f => !passesFilter(f, item));
+};
+
+const parseAs = (value, type) => {
+  switch (type) {
+    case "string":
+      return `${value}`;
+    case "int":
+      return parseInt(value);
+    case "float":
+      return parseFloat(value);
+    case "boolean":
+      return value === "true";
+    default:
+      console.error(`Unknown parseType: ${type}`);
+      return value;
+  }
 };
 
 const dbScan = async (db, table, filters) => {
@@ -52,10 +69,10 @@ const dbScan = async (db, table, filters) => {
     ExpressionAttributeNames = {};
     FilterExpression = "";
     for (let i in preFilters) {
-      const { field, value, comp } = preFilters[i];
+      const { field, value, comp, parseValueAs } = preFilters[i];
       const fieldName = `#${field}`;
       FilterExpression += `${fieldName} ${comp} :${field}`;
-      ExpressionAttributeValues[`:${field}`] = value;
+      ExpressionAttributeValues[`:${field}`] = parseAs(value, parseValueAs);
       ExpressionAttributeNames[`${fieldName}`] = field;
       if (i < preFilters.length - 1) {
         FilterExpression += " AND ";
