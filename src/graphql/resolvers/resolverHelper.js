@@ -63,7 +63,7 @@ const dbScan = async (db, table, filters) => {
     }
   }
 
-  let params = {
+  const params = {
     TableName: table,
     FilterExpression,
     ExpressionAttributeValues,
@@ -73,10 +73,8 @@ const dbScan = async (db, table, filters) => {
   let results = await db.scan(params).promise();
   let items = results.Items || [];
   if (Array.isArray(items)) {
-    //Array of items
     return items.filter(i => passesFilters(postFilters, i));
   } else {
-    //Single item
     return passesFilters(postFilters, items) ? items : [];
   }
 };
