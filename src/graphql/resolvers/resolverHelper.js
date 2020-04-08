@@ -48,6 +48,8 @@ const parseAs = (value, type) => {
       return parseInt(value);
     case "float":
       return parseFloat(value);
+    case "boolean":
+      return value === "true";
     default:
       console.error(`Unknown parseType: ${type}`);
       return value;
