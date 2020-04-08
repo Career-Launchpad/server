@@ -67,7 +67,6 @@ const dbScan = async (db, table, filters) => {
     ExpressionAttributeNames = {};
     FilterExpression = "";
     for (let i in preFilters) {
-      console.log(preFilters[i]);
       const { field, value, comp, parseValueAs } = preFilters[i];
       const fieldName = `#${field}`;
       FilterExpression += `${fieldName} ${comp} :${field}`;
@@ -85,8 +84,6 @@ const dbScan = async (db, table, filters) => {
     ExpressionAttributeValues,
     ExpressionAttributeNames
   };
-
-  console.log(params);
 
   let results = await db.scan(params).promise();
   let items = results.Items || [];
