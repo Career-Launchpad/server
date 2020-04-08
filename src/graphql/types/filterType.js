@@ -3,7 +3,8 @@ import { GraphQLString, GraphQLList, GraphQLInputObjectType } from "graphql";
 const filter = {
   field: { type: GraphQLString },
   value: { type: GraphQLString },
-  comp: { type: GraphQLString }
+  comp: { type: GraphQLString },
+  parseValueAs: { type: GraphQLString }
 };
 
 const FilterType = new GraphQLInputObjectType({
