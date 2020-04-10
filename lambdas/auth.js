@@ -1,17 +1,23 @@
 "use strict";
 
-const AWS = require("aws-sdk"); // eslint-disable-line import/no-extraneous-dependencies
+const AWS = require("aws-sdk");
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.auth = async (event, context, callback) => {
   const params = { TableName: "Aliases" };
-  let aliasList = await dynamoDb.scan(params).promise();
-  aliasList = aliasList.Items;
 
-  response = {
+  let scanResults = [];
+  let items;
+  do {
+    items = await dynamoDb.scan(params).promise();
+    items.Items.forEach(item => scanResults.push(item));
+    params.ExclusiveStartKey = items.LastEvaluatedKey;
+  } while (typeof items.LastEvaluatedKey != "undefined");
+
+  const response = {
     statusCode: 200,
-    body: JSON.stringify(aliasList)
+    body: JSON.stringify(scanResults)
   };
 
   callback(null, response);
