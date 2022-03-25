@@ -55,7 +55,7 @@
     "env-cmd": "^10.1.0",
     "husky": "^3.1.0",
     "jest": "^24.9.0",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "nodemon": "^1.19.4",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
